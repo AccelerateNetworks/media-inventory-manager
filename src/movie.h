@@ -21,11 +21,11 @@ class Movie : public Media {
 
  public:
 
- Movie(string, string, string, string) : Media(MediaType::MOVIE, string, string);
+  Movie(string, string, string, string);
   void addActor(string);
   string getDirector();
   string getGenre();
-  vector<string> getActors();
+  vector<string> getAllActors();
   bool hasActor(string);
 
   string hash();
