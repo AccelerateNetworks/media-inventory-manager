@@ -15,12 +15,11 @@ Classic::Classic( const std::string &medTitle,
                   int month,
                   std::string dir,
                   std::string actor )
-            : Movie(MediaType::MOVIE, MovieType::CLASSIC, medTitle, year,
-                    std::move(dir),
-                    month,
-                    std::move(actor))
+  : Movie(MediaType::MOVIE, MovieType::CLASSIC, medTitle, year,
+          std::move(dir),
+          month,
+          std::move(actor))
 { }
 
 Classic::~Classic() { }
 // end Classic::Classic(...)
-

@@ -1,5 +1,6 @@
 
-#include "../header_files/comedy.h"
+#include "drama.h"
+
 
 /**
  *
@@ -8,12 +9,12 @@
  * @param month
  * @param dir
  */
-Comedy::Comedy( const std::string &medTitle,
+Drama::Drama( const std::string &medTitle,
                 int year,
                 int month,
                 std::string dir )
     : Movie(MediaType::MOVIE,
-            MovieType::COMEDY,
+            MovieType::DRAMA,
             medTitle,
             year,
             std::move(dir),
@@ -29,13 +30,13 @@ Comedy::Comedy( const std::string &medTitle,
  * @param dir
  * @param actor
  */
-Comedy::Comedy( const std::string &medTitle,
+Drama::Drama( const std::string &medTitle,
                 int year,
                 int month,
                 std::string dir,
                 std::string actor)
     : Movie(MediaType::MOVIE,
-            MovieType::COMEDY,
+            MovieType::DRAMA,
             medTitle,
             year,
             std::move(dir),
@@ -43,7 +44,7 @@ Comedy::Comedy( const std::string &medTitle,
             actor)
 { }
 
-Comedy::~Comedy() {
+Drama::~Drama() {
 
 }
 // end Classic::Classic(...)

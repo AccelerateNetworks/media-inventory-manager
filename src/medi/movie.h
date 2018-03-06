@@ -4,9 +4,9 @@
 #define MEDIA_INVENTORY_MANAGER_MOVIE_H
 
 #include <vector>
-#include "interfaces/icriteria.h"
-#include "interfaces/movie_enums.h"
-#include "../media.h"
+#include "icriteria.h"
+#include "movie_enums.h"
+#include "media.h"
 
 
 
@@ -17,19 +17,19 @@ private:
    *
    */
   MovieType movType;
-  
+
   /**
    *
    */
   std::string dirctr;
-  
+
 public:
-  
+
   /**
    *
    */
   Movie();
-  
+
   /**
    *
    * @param medType
@@ -41,27 +41,26 @@ public:
   Movie(MediaType mediaType, MovieType movieType, std::string medTitle,
         int year, std::string dir, int releaseMonth,
         std::string majorActor);
-  
-  
+
+
   /**
    *
    */
   virtual ~Movie();
-  
+
   /**
    *
    * @param rhs
    * @return
    */
   virtual int compareMovies(const Movie &rhs) const;
-  
+
   /**
    *
    * @return
    */
   MovieType getMovieType() const override;
-  
-  /**
+   /**
    *
    * @param rhs
    * @return
@@ -72,7 +71,7 @@ public:
           :(getMediaType() > rhs.getMediaType())? (short) 1
           :(short) 0;
   }
-  
+
 };
 
 

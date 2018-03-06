@@ -3,7 +3,7 @@
 #define MEDIA_INVENTORY_MANAGER_COMEDY_H
 
 
-#include "../../movie.h"
+#include "movie.h"
 
 class Comedy : public Movie{
 public:

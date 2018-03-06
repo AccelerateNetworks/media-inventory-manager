@@ -61,10 +61,22 @@ template <class K, class V>
 }
 
 template<class K, class V>
-void HashTable<K,V>::enroll(K, V){
+void HashTable<K,V>::enroll(K key, V val){
+  K hashval = hasher(key);
 
+  for(bucket b : this->map){
+    if(b.hash == hashval){
+      b.Keys.push_back(key);
+      b.Values.push_back(val);
+      return;
+    }
+  }
+
+  bucket* b = new bucket();
+  b->hash = hashval;
+  b->Values.push_back(val);
+  b->Keys.push_back(key);
 }
-
 template<class K, class V>
 K HashTable<K,V>::getHash(K arg){
 return hasher(arg);

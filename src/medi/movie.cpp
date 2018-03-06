@@ -52,12 +52,10 @@ MovieType Movie::getMovieType() const {
  * @return
  */
 int Movie::compareMovies(const Movie &rhs) const {
-  
-  
   int setOrder = compareMedia(rhs), setOtherOrder;
-  
+
   if(setOrder != 0)return setOrder;
-  
+
   setOrder = 0, setOtherOrder = 0;
   switch (movType){
     case MovieType::CLASSIC: ++setOrder;
@@ -71,10 +69,10 @@ int Movie::compareMovies(const Movie &rhs) const {
     case MovieType::COMEDY:  ++setOtherOrder;
     default:break;
   }
-  
+
   if(setOrder < setOtherOrder) return -1;
   if(setOrder > setOtherOrder) return  1;
-  
+
   /*
    * By this point, we have established that this and rhs both are movies of
    * the same genre.
@@ -115,7 +113,7 @@ int Movie::compareMovies(const Movie &rhs) const {
       return (secondary.comedy < rhs.secondary.comedy)? -1
                : (secondary.comedy > rhs.secondary.comedy)?  1
                : 0;
-    
+
     default:break;
   }
 }

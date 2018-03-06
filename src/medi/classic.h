@@ -6,19 +6,19 @@
 #include "../../movie.h"
 
 class Classic : public Movie{
-public:
+ public:
   
   Classic(
-      const std::string &medTitle,
-      int year,
-      int month,
-      std::string dir,
-      std::string actor
-  );
+          const std::string &medTitle,
+          int year,
+          int month,
+          std::string dir,
+          std::string actor
+          );
   
   virtual ~Classic();
 
-private:
+ private:
 
 
 
