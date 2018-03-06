@@ -10,7 +10,7 @@ using std::string;
 using std::vector;
 using std::ostream;
 
-public enum class MovieType {COMEDY, CLASSIC, DRAMA};
+enum class MovieType {COMEDY, CLASSIC, DRAMA};
 
 class Movie : public Media {
 
@@ -21,14 +21,14 @@ class Movie : public Media {
 
  public:
 
- Movie(string, string, string, string) : Media(string, string, MediaType);
+ Movie(string, string, string, string) : Media(MediaType::MOVIE, string, string);
   void addActor(string);
   string getDirector();
   string getGenre();
   vector<string> getActors();
   bool hasActor(string);
 
-  string operator#();
+  string hash();
   ostream& operator<<(ostream&);
 };
 

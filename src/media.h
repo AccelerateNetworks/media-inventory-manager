@@ -1,11 +1,12 @@
 #ifndef MEDIA_H
 #define MEDIA_H
 
-#include <stream>
+#include <iostream>
 #include <string>
 using std::string;
+using std::ostream;
 
-public enum class MediaType {MOVIE, CD, USB};
+enum class MediaType {MOVIE, CD, USB};
 
 class Media {
 
@@ -21,7 +22,7 @@ class Media {
     type = type;
   }
 
-  virtual string operator#() = 0;
+  virtual string hash() = 0;
   MediaType getType(){return this->type;}
   string getTitle(){return this->title;}
   string getYear(){return this->year;}
