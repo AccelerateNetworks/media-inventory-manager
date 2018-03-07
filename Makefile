@@ -26,5 +26,4 @@ install:
 clean:
 	- @- $(RM) $(program_NAME)
 	- @- $(RM) $(program_OBJS)
-	- @- rm test
-
+	- @- rm test mediainv

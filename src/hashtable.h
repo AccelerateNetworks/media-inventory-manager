@@ -17,6 +17,9 @@ private:
   // pointer to hash function
   K (*hasher)(K);
 
+  // finds correct val in a bucket
+  V getFromBucket(K, bucket);
+
   // number of entries
   int                 numberOfEntries;
   // underlying implementation
@@ -77,9 +80,32 @@ void HashTable<K,V>::enroll(K key, V val){
   b->Values.push_back(val);
   b->Keys.push_back(key);
 }
+
 template<class K, class V>
 K HashTable<K,V>::getHash(K arg){
 return hasher(arg);
+}
+
+template<class K, class V>
+  V HashTable<K, V>::getFromBucket(K key, bucket b){
+
+  for(int i = 0; i < b.Keys.size(); i++){
+    if(b.Keys[i] == key) return b.Values[i];
+  }
+
+    throw "dun_goofed.jpg";
+}
+
+template<class K, class V>
+  V HashTable<K,V>::get(K key){
+  for(bucket b : this->map){
+    if(this->hasher(key) == b.hash){
+      return getFromBUcket(key, b);
+    }
+  }
+
+  // maybe throw something?
+  return {};
 }
 
 #endif //HASHTABLE_H

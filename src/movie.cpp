@@ -33,3 +33,14 @@ bool Movie::hasActor(string boyoMcBoyeeee){
 
   return false;
 }
+
+string Movie::hash(){
+  string hash = ""+this->genre[0];
+  // TODO: work out better, non dummy output
+  return hash;
+}
+
+ostream& Movie::operator<<(ostream& output){
+  output << "Movie: " << this->getTitle() << ", " << this->getYear();
+  return output;
+}
