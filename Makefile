@@ -1,8 +1,8 @@
 program_NAME := mediainv
-program_CXX_SRCS := $(wildcard src/*.cpp) $(wildcard */*.cpp)
+program_CXX_SRCS := $(wildcard src/*.cpp)
 program_CXX_OBJS := ${program_CXX_SRCS:.cpp=.o}
 program_OBJS = $(program_CXX_OBJS)
-program_INCLUDE_DIRS := src tests
+program_INCLUDE_DIRS := src
 program_LIBRARY_DIRS :=
 program_LIBRARIES :=
 
@@ -21,7 +21,7 @@ test:
 	@- g++ -std=c++14 -g -Wall -Wextra -o test tests/alltests.cpp; ./test
 
 install:
-	install -m557 mediainv /usr/bin
+	@- install -m557 mediainv /usr/bin
 
 clean:
 	- @- $(RM) $(program_NAME)

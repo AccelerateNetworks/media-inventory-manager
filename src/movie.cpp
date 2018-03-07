@@ -3,11 +3,9 @@
 Movie::Movie(string title, string year, string director, string genre)
   : Media(MediaType::MOVIE, title, year), director(director), genre(genre) {
 
-  switch (genre){
-  case "comedy": this->EnumGenre = MovieType::COMEDY; break;
-  case "classic": this->EnumGenre = MovieType::CLASSIC; break;
-  case "drama": this->EnumGenre = MovieType::DRAMA; break;
-  }
+  if(genre == "drama") this->EnumGenre = MovieType::DRAMA;
+  if(genre == "comedy") this->EnumGenre = MovieType::COMEDY;
+  if(genre == "classic") this->EnumGenre = MovieType::CLASSIC;
 }
 
 void Movie::addActor(string boyo){
@@ -26,7 +24,7 @@ vector<string> Movie::getAllActors(){
   return this->actors;
 }
 
-bool hasActor(string boyoMcBoyeeee){
+bool Movie::hasActor(string boyoMcBoyeeee){
   for(string s : this->actors){
     if(s == boyoMcBoyeeee){
       return true;
