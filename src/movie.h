@@ -6,22 +6,22 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 using std::string;
 using std::vector;
 using std::ostream;
 
-enum class MovieType {COMEDY, CLASSIC, DRAMA};
+
 
 class Movie : public Media {
 
-  MovieType EnumGenre;
   string director;
   string genre;
   vector<string> actors;
 
  public:
 
-  Movie(string, string, string, string);
+  Movie(string title, string year, string director, string genre);
   void addActor(string);
   string getDirector();
   string getGenre();
