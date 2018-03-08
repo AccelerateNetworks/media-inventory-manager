@@ -18,17 +18,22 @@ private:
   K (*hasher)(K);
 
   // finds correct val in a bucket
-  V getFromBucket(K, bucket);
+  V getFromBucket(K, bucket*);
+  bool isInBucket(K, bucket*);
+
+  // updates a keypair
+  void update(K, V, bucket*);
 
   // number of entries
-  int                 numberOfEntries;
+  int                 numberOfEntries = 0;
   // underlying implementation
-  std::vector<bucket> map;
+  std::vector<bucket*> map;
 
 public:
   // constructor takes a pointer to a
   // hashing function
   HashTable(K(*hashFunc)(K));
+  ~HashTable();
 
   // enroll emplaces a key value pair
   // creates a new bucket if the hash
@@ -37,9 +42,6 @@ public:
 
   // retrieves a value from a key
   V get(K);
-
-  // updates a keypair
-  void update(K, V);
 
   // returns current number of entries
   int getNumberOfEntries();
@@ -67,10 +69,12 @@ template<class K, class V>
 void HashTable<K,V>::enroll(K key, V val){
   K hashval = hasher(key);
 
-  for(bucket b : this->map){
-    if(b.hash == hashval){
-      b.Keys.push_back(key);
-      b.Values.push_back(val);
+  for(bucket* b : this->map){
+    if(b->hash == hashval){
+      if(isInBucket(key, b)){ this->update(key, val, b); return; }
+      b->Keys.push_back(key);
+      b->Values.push_back(val);
+      ++this->numberOfEntries;
       return;
     }
   }
@@ -79,6 +83,8 @@ void HashTable<K,V>::enroll(K key, V val){
   b->hash = hashval;
   b->Values.push_back(val);
   b->Keys.push_back(key);
+  ++this->numberOfEntries;
+  this->map.push_back(b);
 }
 
 template<class K, class V>
@@ -87,25 +93,53 @@ return hasher(arg);
 }
 
 template<class K, class V>
-  V HashTable<K, V>::getFromBucket(K key, bucket b){
+  V HashTable<K, V>::getFromBucket(K key, bucket* b){
 
-  for(int i = 0; i < b.Keys.size(); i++){
-    if(b.Keys[i] == key) return b.Values[i];
+  for(int i = 0; i < b->Keys.size(); i++){
+    if(b->Keys[i] == key) return b->Values[i];
   }
 
-    throw "dun_goofed.jpg";
+    throw "Internal Logic Error: HashTable::getFromBucket()";
 }
 
 template<class K, class V>
   V HashTable<K,V>::get(K key){
-  for(bucket b : this->map){
-    if(this->hasher(key) == b.hash){
-      return getFromBUcket(key, b);
+  for(bucket* b : this->map){
+    if(this->hasher(key) == b->hash){
+      return getFromBucket(key, b);
     }
   }
 
   // maybe throw something?
   return {};
+}
+
+template<class K, class V>
+  bool HashTable<K,V>::isInBucket(K key, bucket* b){
+  for(K keymaybe : b->Keys){
+    if(keymaybe == key) return true;
+  }
+
+  return false;
+}
+
+template<class K, class V>
+  void HashTable<K,V>::update(K key, V val, bucket* b){
+  for(int i = 0; i < b->Keys.size(); i++){
+    if(b->Keys[i] == key){
+      b->Values[i] = val;
+      return;
+    }
+  }
+
+  throw "Internal Logic Error: HashTable::update()";
+}
+
+template<class K, class V>
+  HashTable<K,V>::~HashTable(){
+  for(bucket* b : this->map){
+    delete b;
+  }
 }
 
 #endif //HASHTABLE_H
