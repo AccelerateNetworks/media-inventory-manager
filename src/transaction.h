@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <chrono>
-#include "media.h"
+#include "movie.h"
 using std::chrono::system_clock;
 using std::chrono::duration;
 
@@ -29,7 +29,7 @@ class Transaction {
   
 
   
-  std::vector<Media> contents;
+  std::vector<Movie> contents;
   std::time_t unixTimeOfCheckout{system_clock::to_time_t(system_clock::now())};
   std::time_t unixTimeDue{calc_return_date()};
   
@@ -37,8 +37,8 @@ public:
 
   bool isDue()const;
   uint64_t unixTimeCheckedOut()const;
-  bool contains(const Media& arg)const;
-  std::vector<Media> getContents();
+  bool contains(const Movie& arg)const;
+  std::vector<Movie> getContents();
   
   
 };

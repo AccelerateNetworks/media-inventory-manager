@@ -17,12 +17,20 @@ public:
       :type(type), title(std::move(title)), year(std::move(year)){
   }
   
-  virtual string hash() = 0;
+  virtual string hash() =0;
   MediaType getType()const {return this->type;}
   string getTitle()const {return this->title;}
   string getYear()const {return this->year;}
   
-  virtual ostream& operator<<(ostream& out) = 0;
+  // we can't create ostream& as being a pure virtual function
+  // instead we can create a custom function that takes in an ostream
+  // reference, feeds it the desired data, and then returns that object to
+  // the operator<< overload we implement in our derived classes.
+//  virtual ostream& operator<<(ostream& out);
+
+  // we can now define this function in our derived classes, and then call it
+  // from inside the operator<< overload in those derived classes.
+  virtual void feedToOutstream(std::ostream& os)const = 0;
   
 private:
   

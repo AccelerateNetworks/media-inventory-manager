@@ -45,7 +45,7 @@ void Movie::addActor(string boyo){
  *
  * @return
  */
-string Movie::getDirector(){
+string Movie::getDirector() const {
   return this->director;
 }
 
@@ -53,7 +53,7 @@ string Movie::getDirector(){
  *
  * @return
  */
-string Movie::getGenre(){
+string Movie::getGenre() const {
   return this->genre;
 }
 
@@ -61,7 +61,7 @@ string Movie::getGenre(){
  *
  * @return
  */
-vector<string> Movie::getAllActors(){
+vector<string> Movie::getAllActors() const {
   return this->actors;
 }
 
@@ -70,7 +70,7 @@ vector<string> Movie::getAllActors(){
  * @param boyoMcBoyeeee
  * @return
  */
-bool Movie::hasActor(string boyoMcBoyeeee){
+bool Movie::hasActor(string boyoMcBoyeeee) const {
   for(string s : this->actors){
     if(s == boyoMcBoyeeee){
       return true;
@@ -98,5 +98,25 @@ string Movie::hash(){
 ostream& Movie::operator<<(ostream& output){
   output << "Movie: " << this->getTitle() << ", " << this->getYear();
   return output;
+}
+
+void Movie::feedToOutstream(std::ostream &os) const {
+  os << this->getGenre() << ", " << this->getDirector() << ", "
+     << this->getTitle() << ", ";
+  
+  if(genre == "F" || genre == "D"){
+    os << this->getYear();
+  }else if( genre == "C"){
+    
+    for(const auto& itm : actors)os << itm << ", ";
+    
+    string s;
+    if(getYear().length() > 4){
+      s = getYear().substr(4,2) + getYear().substr(0,4);
+    }else {
+      s = getYear();
+    }
+    os << s;
+  }
 }
 

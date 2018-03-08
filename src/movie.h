@@ -26,11 +26,14 @@ class Movie : public Media {
   Movie(string title, string year, string director, string genre, string actor);
   
   void addActor(string);
-  string getDirector();
-  string getGenre();
-  vector<string> getAllActors();
-  bool hasActor(string);
-
+  string getDirector() const;
+  string getGenre() const;
+  vector<string> getAllActors() const;
+  bool hasActor(string) const;
+  
+  void feedToOutstream(std::ostream &os) const override;
+  
+  
   string hash();
   ostream& operator<<(ostream&);
   

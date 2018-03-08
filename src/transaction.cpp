@@ -9,11 +9,12 @@ uint64_t Transaction::unixTimeCheckedOut() const {
   return (uint64_t)unixTimeOfCheckout;
 }
 
-bool Transaction::contains(const Media &arg) const {
-  for(const Media& itm : contents)if(arg.getTitle() == itm.getTitle())return true;
+bool Transaction::contains(const Movie &arg) const {
+  for(const Movie& itm : contents)if(arg.getTitle() == itm.getTitle())return
+          true;
   return false;
 }
 
-std::vector<Media> Transaction::getContents() {
+std::vector<Movie> Transaction::getContents() {
   return contents;
 }
