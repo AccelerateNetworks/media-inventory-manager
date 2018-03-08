@@ -4,3 +4,9 @@ src/.\#*
 src/*.o
 .\#*
 tests/*.o
+
+# setting up the ignore conditions for CLion's autogen files and folders
+
+[Cc][Mm]ake*.*
+[Cc][Mm]ake*/*
+.idea/*
