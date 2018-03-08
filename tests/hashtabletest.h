@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include "hashtable.h"
+#include "../src/hashtable.h"
 using namespace std;
 
 int intHasher(int arg){
@@ -19,7 +19,7 @@ void hashTableTest(){
   try{
     hashTableConstructorTest();
     cout << "[+] Passed constructor test" << endl;
-  } catch (string s){
+  } catch (string& s){
     cout << "[-] " << s << endl;
   }
   
