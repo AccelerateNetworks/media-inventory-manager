@@ -34,10 +34,9 @@ void movie_testing(const bool& be_verbose){
   
   //  testing the movie constructor against the different parameter needs for each of our movie genres.
   try {
-    cout << left << setw(20) << "[+] performing test" << left << ":" <<
-         setw(myLen)
-         << right << "test_each_genre_constructor_implementation"
-         << endl;
+    cout << left << setw(20) << "[+] performing test" << left << ":"
+         << setw(myLen) << setw(myLen) << right
+         << "test_each_genre_constructor_implementation" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)){
       test_passed_output( "test_each_genre_constructor_implementation",x);
     }else {
@@ -51,8 +50,8 @@ void movie_testing(const bool& be_verbose){
     
     // testing classic parameters in ctor
     cout << left << setw(20) << "[+] performing test" << left << ":"
-         << setw(myLen) << right << "test_classic_constructor_implementations"
-         << endl;
+         << setw(myLen) << setw(myLen) << right
+         << "test_classic_constructor_implementations" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)) {
       test_passed_output("test_classic_constructor_implementations", x);
     }else {
@@ -61,8 +60,8 @@ void movie_testing(const bool& be_verbose){
     
     // testing drama parameters in ctor
     cout << left << setw(20) << "[+] performing test" << left << ":"
-         << setw(myLen) << right << "test_drama_constructor_implementations"
-         << endl;
+        << setw(myLen) << setw(myLen) << right
+        << "test_drama_constructor_implementations" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)) {
       test_passed_output("test_drama_constructor_implementations", x);
     }else {
@@ -71,8 +70,8 @@ void movie_testing(const bool& be_verbose){
     
     // testing comedy parameters in ctor
     cout << left << setw(20) << "[+] performing test" << left << ":"
-         << setw(myLen) << right << "test_comedy_constructor_implementations"
-         << endl;
+         << setw(myLen) << setw(myLen) << right
+         << "test_comedy_constructor_implementations" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)) {
       test_passed_output("test_comedy_constructor_implementations", x);
     }else {

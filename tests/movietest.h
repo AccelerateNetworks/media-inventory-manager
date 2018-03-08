@@ -6,7 +6,7 @@
 #define MEDIA_INVENTORY_MANAGER_MOVIETEST_H
 
 #include <iostream>
-#include <movie.h>
+#include <../src/movie.h>
 
 using namespace std;
 
