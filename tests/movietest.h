@@ -1,17 +1,43 @@
-//
-// Created by Peter on 3/7/2018.
-//
 
 #ifndef MEDIA_INVENTORY_MANAGER_MOVIETEST_H
 #define MEDIA_INVENTORY_MANAGER_MOVIETEST_H
 
 #include <iostream>
+#include <utility>
 #include "../src/movie.h"
 
 
 using namespace std;
 
+/**
+ *
+ * @param testName
+ * @param testNameLen
+ */
+void test_passed_output(const string &testName, int testNameLen){
+  int myLen = testNameLen;
+  cout << left << setw(20) << "[+] passed" << left << ":" << setw(myLen)
+       << right
+       << testName << endl;
+}
 
+/**
+ *
+ * @param testName
+ * @param testNameLen
+ */
+void test_failed_outptut(const string &testName, int testNameLen){
+  int myLen = testNameLen;
+  cout << left << setw(20)  << "[-] failed" << left << ":" << setw(myLen) <<
+       right
+       << testName << endl;
+}
+
+/**
+ *
+ * @param verbose
+ * @return
+ */
 bool test_each_genre_constructor_implementation(const bool &verbose){
 
 /*
@@ -95,9 +121,11 @@ bool test_each_genre_constructor_implementation(const bool &verbose){
   return true;
 };
 
-
-
-
+/**
+ *
+ * @param verbose
+ * @return
+ */
 bool test_classic_constructor_implementations(const bool &verbose){
   if(verbose) {
     cout << "[+] test classic1 construction: Casablanca classic movie entry "
@@ -124,6 +152,11 @@ bool test_classic_constructor_implementations(const bool &verbose){
   
 }
 
+/**
+ *
+ * @param verbose
+ * @return
+ */
 bool test_drama_constructor_implementations(const bool &verbose){
   
   if(verbose) {
@@ -146,6 +179,11 @@ bool test_drama_constructor_implementations(const bool &verbose){
   return true;
 }
 
+/**
+ *
+ * @param verbose
+ * @return
+ */
 bool test_comedy_constructor_implementations(const bool &verbose){
   
   if(verbose) {
@@ -165,6 +203,64 @@ bool test_comedy_constructor_implementations(const bool &verbose){
                  "1996",
                  "Joel Coen", "F");
   return true;
+}
+
+/**
+ *      * the first try/catch block handles testing the movie constructor
+ *      against the different parameter needs for each of our movie genres.
+ *
+ *      *
+ *
+ * @param be_verbose
+ */
+void movie_testing(const bool& be_verbose){
+  
+  int x = 44;// 42 is the longest test method name I made for this test set
+  int myLen = 20;
+  
+  //  testing the movie constructor against the different parameter needs for each of our movie genres.
+  try {
+    cout << left << setw(20) << "[+] performing test" << left << ":"
+         << setw(x) << right << "test_each_genre_constructor_implementation"
+         << endl;
+    if(test_each_genre_constructor_implementation(be_verbose)){
+      test_passed_output( "test_each_genre_constructor_implementation",x);
+    }else {
+      test_failed_outptut("test_each_genre_constructor_implementation",x);
+    }
+    
+  }catch (std::exception e){
+    
+    // if we have a failure, we need to identify where... so lets break the
+    // test out into a per genre basis
+    
+    // testing classic parameters in ctor
+    cout << left << setw(20) << "[+] performing test" << left << ":"
+         << setw(x) << right << "test_classic_constructor_implementations" << endl;
+    if(test_each_genre_constructor_implementation(be_verbose)) {
+      test_passed_output("test_classic_constructor_implementations", x);
+    }else {
+      test_failed_outptut("test_classic_constructor_implementations", x);
+    }
+    
+    // testing drama parameters in ctor
+    cout << left << setw(20) << "[+] performing test" << left << ":"
+         << setw(x) << right << "test_drama_constructor_implementations" << endl;
+    if(test_each_genre_constructor_implementation(be_verbose)) {
+      test_passed_output("test_drama_constructor_implementations", x);
+    }else {
+      test_failed_outptut("test_drama_constructor_implementations", x);
+    }
+    
+    // testing comedy parameters in ctor
+    cout << left << setw(20) << "[+] performing test" << left << ":"
+         << setw(x) << right << "test_comedy_constructor_implementations" << endl;
+    if(test_each_genre_constructor_implementation(be_verbose)) {
+      test_passed_output("test_comedy_constructor_implementations", x);
+    }else {
+      test_failed_outptut("test_comedy_constructor_implementations", x);
+    }
+  }
 }
 
 #endif //MEDIA_INVENTORY_MANAGER_MOVIETEST_H
