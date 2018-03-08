@@ -18,9 +18,9 @@ public:
   }
   
   virtual string hash() = 0;
-  MediaType getType(){return this->type;}
-  string getTitle(){return this->title;}
-  string getYear(){return this->year;}
+  MediaType getType()const {return this->type;}
+  string getTitle()const {return this->title;}
+  string getYear()const {return this->year;}
   
   virtual ostream& operator<<(ostream& out) = 0;
   
