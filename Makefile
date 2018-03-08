@@ -6,7 +6,7 @@ program_INCLUDE_DIRS := src
 program_LIBRARY_DIRS :=
 program_LIBRARIES :=
 
-CPPFLAGS += $(foreach includedir,$(program_INCLUDE_DIRS),-I$(includedir)) -O2
+CPPFLAGS += $(foreach includedir,$(program_INCLUDE_DIRS),-I$(includedir)) -O2 -std=gnu++11
 LDFLAGS += $(foreach librarydir,$(program_LIBRARY_DIRS),-L$(librarydir))
 LDFLAGS += $(foreach library,$(program_LIBRARIES),-l$(library))
 
@@ -26,5 +26,5 @@ install:
 clean:
 	- @- $(RM) $(program_NAME)
 	- @- $(RM) $(program_OBJS)
-	- @- rm test mediainv
+	- @- rm test
 
