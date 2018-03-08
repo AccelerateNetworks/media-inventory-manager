@@ -11,9 +11,9 @@ enum class MediaType;
  * @param genre
  */
 Movie::Movie(string title, string year, string director, string genre)
-  : Media(MediaType::MOVIE, (title), (year)),
-    director((director)),
-    genre((genre)) {
+  : Media(MediaType::MOVIE, std::move(title), std::move(year)),
+    director(std::move(director)),
+    genre(std::move(genre)) {
  }
 
  /**
@@ -26,11 +26,12 @@ Movie::Movie(string title, string year, string director, string genre)
   */
 Movie::Movie(string title, string year, string director, string genre,
              string actor)
-    :Media(MediaType::MOVIE, (title), (year)),
-     director((director)),
-     genre((genre))  {
+    :Media(MediaType::MOVIE, std::move(title), std::move(year)),
+     director(std::move(director)),
+     genre(std::move(genre))  {
   actors.push_back(actor);
 }
+
 
 /**
  *

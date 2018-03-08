@@ -14,7 +14,7 @@ class Media {
 public:
   
   Media(MediaType type, string title, string year)
-      :type(type), title((title)), year((year)){
+      :type(type), title(std::move(title)), year(std::move(year)){
   }
   
   virtual string hash() = 0;

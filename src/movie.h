@@ -24,6 +24,7 @@ class Movie : public Media {
 
   Movie(string title, string year, string director, string genre);
   Movie(string title, string year, string director, string genre, string actor);
+  
   void addActor(string);
   string getDirector();
   string getGenre();
@@ -32,6 +33,7 @@ class Movie : public Media {
 
   string hash();
   ostream& operator<<(ostream&);
+  
 };
 
 #endif //MOVIE_H
