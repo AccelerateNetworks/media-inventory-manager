@@ -84,7 +84,9 @@ void movie_testing(const bool& be_verbose){
 
 int main() {
 	cout << "[+] Running all tests -" << endl;
+  cout << "\t\t hashTable testing START" << endl;
   hashTableTest();
+  cout << "\t\t hashTable testing END" << endl;
   
   
   
