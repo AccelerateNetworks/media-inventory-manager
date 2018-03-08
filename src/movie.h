@@ -22,6 +22,7 @@ class Movie : public Media {
  public:
 
   Movie(string title, string year, string director, string genre);
+  Movie(string title, string year, string director, string genre, string actor);
   void addActor(string);
   string getDirector();
   string getGenre();
