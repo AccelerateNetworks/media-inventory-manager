@@ -9,15 +9,20 @@
 
 using namespace std;
 
+// length of longest string used in test results output
+int testNameLen = 48;
+
+// used to set a consistent with for pass or fail results
+int pf = 20;
+
 /**
  *
  * @param testName
  * @param testNameLen
  */
-void test_passed_output(const string &testName, int testNameLen){
-  int myLen = testNameLen;
-  cout << left << setw(20) << "[+] passed" << left << ":" << setw(myLen)
-       << right
+void test_passed_output(const string &testName) {
+  int l = testNameLen;
+  cout << left << setw(20) << "[+] passed" << left << ":" << setw(l) << right
        << testName << endl;
 }
 
@@ -26,10 +31,9 @@ void test_passed_output(const string &testName, int testNameLen){
  * @param testName
  * @param testNameLen
  */
-void test_failed_outptut(const string &testName, int testNameLen){
-  int myLen = testNameLen;
-  cout << left << setw(20)  << "[-] failed" << left << ":" << setw(myLen) <<
-       right
+void test_failed_outptut(const string &testName) {
+  int l = testNameLen;
+  cout << left << setw(20)  << "[-] failed" << left << ":" << setw(l) << right
        << testName << endl;
 }
 
@@ -224,9 +228,9 @@ void movie_testing(const bool& be_verbose){
          << setw(x) << right << "test_each_genre_constructor_implementation"
          << endl;
     if(test_each_genre_constructor_implementation(be_verbose)){
-      test_passed_output( "test_each_genre_constructor_implementation",x);
+      test_passed_output("test_each_genre_constructor_implementation");
     }else {
-      test_failed_outptut("test_each_genre_constructor_implementation",x);
+      test_failed_outptut("test_each_genre_constructor_implementation");
     }
     
   }catch (std::exception e){
@@ -238,27 +242,27 @@ void movie_testing(const bool& be_verbose){
     cout << left << setw(20) << "[+] performing test" << left << ":"
          << setw(x) << right << "test_classic_constructor_implementations" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)) {
-      test_passed_output("test_classic_constructor_implementations", x);
+      test_passed_output("test_classic_constructor_implementations");
     }else {
-      test_failed_outptut("test_classic_constructor_implementations", x);
+      test_failed_outptut("test_classic_constructor_implementations");
     }
     
     // testing drama parameters in ctor
     cout << left << setw(20) << "[+] performing test" << left << ":"
          << setw(x) << right << "test_drama_constructor_implementations" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)) {
-      test_passed_output("test_drama_constructor_implementations", x);
+      test_passed_output("test_drama_constructor_implementations");
     }else {
-      test_failed_outptut("test_drama_constructor_implementations", x);
+      test_failed_outptut("test_drama_constructor_implementations");
     }
     
     // testing comedy parameters in ctor
     cout << left << setw(20) << "[+] performing test" << left << ":"
          << setw(x) << right << "test_comedy_constructor_implementations" << endl;
     if(test_each_genre_constructor_implementation(be_verbose)) {
-      test_passed_output("test_comedy_constructor_implementations", x);
+      test_passed_output("test_comedy_constructor_implementations");
     }else {
-      test_failed_outptut("test_comedy_constructor_implementations", x);
+      test_failed_outptut("test_comedy_constructor_implementations");
     }
   }
 }
