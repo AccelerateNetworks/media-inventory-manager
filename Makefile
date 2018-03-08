@@ -10,7 +10,7 @@ CPPFLAGS += $(foreach includedir,$(program_INCLUDE_DIRS),-I$(includedir)) -O2
 LDFLAGS += $(foreach librarydir,$(program_LIBRARY_DIRS),-L$(librarydir))
 LDFLAGS += $(foreach library,$(program_LIBRARIES),-l$(library))
 
-.PHONY: all test install clean distclean
+.PHONY: all test install clean
 
 all: $(program_NAME) test install clean
 
