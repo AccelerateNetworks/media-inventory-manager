@@ -39,5 +39,5 @@ void clientNameTests(){
 }
 
 void clientSortTests(){
-  if(globalClientOne >= globalClientTwo) throw "Sort Comarator failed!";
+  if(globalClientOne < globalClientTwo)throw "Sort Comarator failed!";
 }
