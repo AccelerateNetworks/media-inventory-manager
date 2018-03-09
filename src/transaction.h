@@ -3,11 +3,14 @@
 #define MEDIA_INVENTORY_MANAGER_TRANSACTION_H
 
 #include <vector>
+#include <ctime>
 #include <chrono>
 #include "movie.h"
+
+
+using namespace std::chrono;
 using std::chrono::system_clock;
 using std::chrono::duration;
-
 
 /**
  * This is an Inventory support class that facilitates actions on the
@@ -19,11 +22,15 @@ class Transaction {
   /**
    * this is a private helper function for calculating the return due
    * date of a rental
-   * @return the overly exact time and date that the rental is due
+   *
+   * @param num_days A type double value for the number of days from now that
+    * the inventory object is due to return.
+   *
+   * @return the overly exact time and date that the rental is due to return
    */
   time_t calc_return_date (int num_days){
-    using rental_length = std::chrono::duration<int,std::ratio<60*60*24>>;
-    return system_clock::to_time_t(system_clock::now()+(rental_length()*num_days));
+    duration<long,std::ratio<60*60*24>> day(num_days);
+    return system_clock::to_time_t(system_clock::now()+day);
   };
   
 
@@ -35,7 +42,8 @@ class Transaction {
 public:
   
   Transaction() = default;
-  Transaction(int rental_length);
+  
+  explicit Transaction(int rental_length);
   
   bool isDue()const;
   uint64_t unixTimeCheckedOut()const;

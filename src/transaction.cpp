@@ -12,14 +12,14 @@
  * @param rental_length
  */
 Transaction::Transaction(int rental_length = 3) {
-  std::cout << "rental_length set to: " << rental_length << " days."<<std::endl;
+//  std::cout << "rental_length set to: " << rental_length << " days."<<std::endl;        // for testing purposes
   if(rental_length < 1) rental_length = 3;
   assert(rental_length > 0);
   unixTimeDue = calc_return_date( rental_length );
 }
 
 bool Transaction::isDue() const {
-  return system_clock::to_time_t(system_clock::now()) == unixTimeDue;
+  return system_clock::to_time_t(system_clock::now()) >= unixTimeDue;
 }
 
 uint64_t Transaction::unixTimeCheckedOut() const {

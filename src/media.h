@@ -17,10 +17,13 @@ public:
       :type(type), title(std::move(title)), year(std::move(year)){
   }
   
-  virtual string hash() =0;
-  MediaType getType()const {return this->type;}
-  string getTitle()const {return this->title;}
-  string getYear()const {return this->year;}
+  virtual string hash(){
+  
+  };
+  
+  MediaType getType()const {return this->type;};
+  string getTitle()const {return this->title;};
+  string getYear()const {return this->year;};
   
   // we can't create ostream& as being a pure virtual function
   // instead we can create a custom function that takes in an ostream
@@ -30,7 +33,22 @@ public:
 
   // we can now define this function in our derived classes, and then call it
   // from inside the operator<< overload in those derived classes.
-  virtual void feedToOutstream(std::ostream& os)const = 0;
+  virtual void feedToOutstream(std::ostream& os)const{
+    switch((int)type){
+      case 0:
+        os << "Movie";
+        break;
+      case 1:
+        os << "CD";
+        break;
+      case 2:
+        os << "USB";
+        break;
+      default: os << "YOU ARE SO $#%&ED";
+      break;
+    }
+    os << ", " << title << ", " << year << std::endl;
+  }
   
 private:
   
