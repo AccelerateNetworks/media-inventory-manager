@@ -1,3 +1,5 @@
+
+
 #include "../src/client.h"
 
 #include <string>
@@ -39,5 +41,6 @@ void clientNameTests(){
 }
 
 void clientSortTests(){
-  if(globalClientOne < globalClientTwo)throw "Sort Comarator failed!";
+  if(globalClientTwo < globalClientOne)throw "Sort Comarator failed!";
 }
+

@@ -16,21 +16,25 @@ string Client::hash(){
   return std::to_string( this->firstName[0] + this->lastName[0]  );
 }
 
-int Client::getID(){
+int Client::getID() const {
   return this->id;
 }
 
-bool Client::operator<(Client c){
-  for(int i = 0; i < this->getName().length() && i < c.getName().length(); ++i){
-    bool b = this->getName()[i] < c.getName()[i];
-    if(b) return true;
-    if(this->getName()[i] > c.getName()[i]) return false;
+bool Client::operator<(const Client& c) const {
+  bool b = true;
+  int least = (int)((this->comparableName().length()<=c.comparableName().length())?
+              this->comparableName().length():c.comparableName().length());
+  int i = 0;
+  for(; i < least && b ;  ++i){
+    // starting out, iterate over char arrays until left != right;
+    // after the first instance of != return the result of:
+    //        (true if <; and false if >)
+    b= this->getName()[i] == c.getName()[i];
   }
-
-  return false;
+  return i < least && this->getName()[i] < c.getName()[i];
 }
 
-bool Client::operator>=(Client c){
+bool Client::operator>=(Client c) const {
   return !(this->operator<(c));
 }
 
@@ -39,6 +43,10 @@ ostream& Client::operator<<(ostream& out){
   return out;
 }
 
-string Client::getName(){
+string Client::getName()const {
   return this->firstName + " " + this->lastName;
+}
+
+string Client::comparableName() const {
+  return this->firstName + this->lastName;
 }
