@@ -6,6 +6,7 @@
 #include "transactiontest.h"
 #include "movietest.h"
 #include "hashtabletest.h"
+#include "clientTests.cpp"
 
 using namespace std;
 
@@ -41,5 +42,9 @@ int main() {
   cout << "[+]\t\t class Transaction testing END" << endl;
   
   cout << endl;
+
+  cout << "[+]\t\t class Client testing START" << endl;
+  runClientTests();
+  cout << "[+]\t\t class Client testing END" << endl;
   return 0;
 }

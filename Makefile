@@ -18,7 +18,7 @@ $(program_NAME): $(program_OBJS)
 	$(LINK.cc) $(program_OBJS) -o $(program_NAME)
 
 test:
-	@- g++ -std=c++14 -g -Wall -Wextra -o test tests/alltests.cpp src/hashtable.cpp src/movie.cpp src/transaction.cpp; ./test
+	@- g++ -std=c++14 -g -Wall -Wextra -o test tests/alltests.cpp src/hashtable.cpp src/movie.cpp src/transaction.cpp src/client.cpp; ./test
 
 install:
 	@- install -m557 mediainv /usr/bin
