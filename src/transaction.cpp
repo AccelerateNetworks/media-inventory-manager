@@ -9,7 +9,8 @@
  *
  * Rather than throwing an error should the input be less than 1 day, the
  * ctor will automatically default the rental duration to 3 days.
- * @param rental_length
+ * @param rental_length an integer for the desired number of days until this
+ * rental comes due
  */
 Transaction::Transaction(int rental_length = 3) {
 //  std::cout << "rental_length set to: " << rental_length << " days."<<std::endl;        // for testing purposes

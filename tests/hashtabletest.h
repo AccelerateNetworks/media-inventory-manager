@@ -1,3 +1,7 @@
+#ifndef HASTHTABLETEST_H
+#define HASTHTABLETEST_H
+
+
 #include <iostream>
 #include <string>
 #include <utility>
@@ -51,3 +55,6 @@ void hashTableEnrollTest(){
     throw s;
   }
 }
+
+
+#endif //HASTHTABLETEST_H
