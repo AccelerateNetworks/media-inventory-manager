@@ -18,7 +18,7 @@ class Client {
  public:
   static int NEXT_ID;
   Client(string, string);
-  string hash();
+  int hash();
   string getName()const;
   int getID()const;
   bool operator<(const Client &)const;

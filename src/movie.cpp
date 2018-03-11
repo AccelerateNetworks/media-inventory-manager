@@ -84,10 +84,8 @@ bool Movie::hasActor(string boyoMcBoyeeee) const {
  *
  * @return
  */
-string Movie::hash(){
-  string hash = ""+this->genre[0];
-  // TODO: work out better, non dummy output
-  return hash;
+int Movie::hash(){
+  return (int) this->getTitle()[0];
 }
 
 /**

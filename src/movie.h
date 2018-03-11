@@ -34,7 +34,7 @@ class Movie : public Media {
   void feedToOutstream(std::ostream &os) const override;
   
   
-  string hash();
+  int hash();
   ostream& operator<<(ostream&);
   
 };
