@@ -22,17 +22,16 @@ int hashc(Client c){
 
 class Inventory {
   HashTable<string, Movie>* contents = new HashTable<string, Movie>(hash);
-  HashTable<Client, vector<Transaction>*>transactionLog(hashc);
+  HashTable<Client, vector<Transaction>*>* transactionLog
+    = new HashTable<Client, vector<Transaction>*>(hashc);
   vector<Client> clientelle;
   Client getClient(string name);
 
  public:
   void addItem(Movie*);
-  Movie getItem(string, string);
   Movie getItem(string, string, string, string);
-  bool returnItem(string, string);
   bool returnItem(string, string, string, string);
-  void newTransaction(string, string, string, string);
+  bool newTransaction(string, string, string, string, string);
   void addClient(Client);
   void printAllMedia();
   bool isMovieCheckedOut(Movie);
