@@ -39,6 +39,7 @@ class Inventory {
   Inventory() = default;
 
   void addItem(Movie);
+  Movie getItem(int id);
 
   /**
    * @param title

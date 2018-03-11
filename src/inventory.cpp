@@ -111,14 +111,12 @@ bool Inventory::isMovieCheckedOut(const Movie &target){
  * @param actor : string
  * @return
  */
-bool Inventory::returnItem(const string &title, const string &year,
-                           const string &director, const string &actor){
-  Movie a = getItem(title, year, director, actor);
+bool Inventory::returnItem(Movie m){
   // by setting c as a reference, we can manipulate the contents of clientelle
   for(Client& c : clientelle){
     // t is a reference so that we can manipulate the contents of translog
     for(Transaction& t : **transactionLog->get(c)){
-      if(t.contains(a) && !t.isReturned){
+      if(t.contains(m) && !t.isReturned){
         return (t.isReturned = true); // assignment is intentional, don't change
       }
     }

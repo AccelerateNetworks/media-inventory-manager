@@ -40,3 +40,4 @@ std::vector<Movie*> Transaction::getContents() {
 void Transaction::addMovie(Movie *m){
   this->contents.push_back(m);
 }
+
