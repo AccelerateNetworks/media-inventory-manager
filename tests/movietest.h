@@ -106,7 +106,7 @@ namespace movie_test {
  * @param be_verbose
  * @return
  */
-  bool test_each_genre_constructor_implementation(const bool &be_verbose) {
+  bool test_each_genre_constructor(const bool &be_verbose) {
 
 /*
  * C, 10, Michael Curtiz, Casablanca, Ingrid Bergman 8 1942
@@ -210,12 +210,12 @@ namespace movie_test {
     //  testing the movie constructor against the different parameter needs for each of our movie genres.
     try {
       cout << left << setw(pf) << "[+] performing test" << left << ":"
-           << setw(l) << right << "test_each_genre_constructor_implementation"
+           << setw(l) << right << "test_each_genre_constructor"
            << endl;
-      if (test_each_genre_constructor_implementation(be_verbose)) {
-        test_passed_output("test_each_genre_constructor_implementation");
+      if (test_each_genre_constructor(be_verbose)) {
+        test_passed_output("test_each_genre_constructor");
       } else {
-        test_failed_outptut("test_each_genre_constructor_implementation");
+        test_failed_outptut("test_each_genre_constructor");
       }
       
     } catch (std::exception e) {
@@ -227,7 +227,7 @@ namespace movie_test {
       cout << left << setw(pf) << "[+] performing test" << left << ":"
            << setw(l) << right << "test_classic_constructor"
            << endl;
-      if (test_each_genre_constructor_implementation(be_verbose)) {
+      if (test_each_genre_constructor(be_verbose)) {
         test_passed_output("test_classic_constructor");
       } else {
         test_failed_outptut("test_classic_constructor");
@@ -237,7 +237,7 @@ namespace movie_test {
       cout << left << setw(pf) << "[+] performing test" << left << ":"
            << setw(l) << right << "test_drama_constructor"
            << endl;
-      if (test_each_genre_constructor_implementation(be_verbose)) {
+      if (test_each_genre_constructor(be_verbose)) {
         test_passed_output("test_drama_constructor");
       } else {
         test_failed_outptut("test_drama_constructor");
@@ -247,7 +247,7 @@ namespace movie_test {
       cout << left << setw(pf) << "[+] performing test" << left << ":"
            << setw(l) << right << "test_comedy_constructor"
            << endl;
-      if (test_each_genre_constructor_implementation(be_verbose)) {
+      if (test_each_genre_constructor(be_verbose)) {
         test_passed_output("test_comedy_constructor");
       } else {
         test_failed_outptut("test_comedy_constructor");
