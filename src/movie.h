@@ -15,7 +15,8 @@ using std::ostream;
 
 
 
-enum class MovieType : char { COMEDY = 'F', DRAMA = 'D', CLASSIC = 'C'};
+enum class MovieType : char { COMEDY = 'F', DRAMA = 'D', CLASSIC = 'C',
+  DEFAULT = ' '};
 
 class Movie : public Media {
   
@@ -95,8 +96,13 @@ class Movie : public Media {
   
 
   
-  // implementing assignment operator overload:
+  // assignment operator overload:
   
+  /**
+   *
+   * @param rhs
+   * @return
+   */
   Movie&operator=(const Movie& rhs);
   
   // equality operator overloads:
@@ -161,7 +167,7 @@ class Movie : public Media {
    *
    */
    struct Comparable{
-     char gnr;
+     char gnr = static_cast<char>(MovieType::DEFAULT);
      string prim;
      string sec;
      Comparable():gnr(' '),prim(""), sec(""){};

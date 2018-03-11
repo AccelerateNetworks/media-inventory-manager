@@ -21,8 +21,8 @@ Movie::Movie(string title, string year, string director, string genre)
   : Media(MediaType::MOVIE, std::move(title), std::move(year)),
     director(std::move(director)),
     genre(std::move(genre)) {
-  comp.gnr = genre.at(0);
-  switch (genre.at(0)){
+  comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
+  switch (comp.gnr){
     case static_cast<char>(MovieType::COMEDY):
       comp.prim = title;
       comp.sec = year;
@@ -51,8 +51,9 @@ Movie::Movie(string title, string year, string director, string genre,
    
   actors.push_back(actor);
   
-   comp.gnr = static_cast<char>(genre.at(0));
-   switch (genre.at(0)){
+   comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
+   
+   switch (comp.gnr){
      case static_cast<char>(MovieType::COMEDY):
        comp.prim = title;
        comp.sec = year;
@@ -78,8 +79,10 @@ Movie::Movie(const Movie &other)
     :Media(MediaType::MOVIE, (other.getTitle()),(other.getYear())),
      director(other.getDirector()),
      genre(other.getGenre()){
-  comp.gnr = static_cast<char>(genre.at(0));
-  switch (genre.at(0)){
+  
+  comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
+  
+  switch (comp.gnr){
     case static_cast<char>(MovieType::COMEDY):
       comp.prim = other.getTitle();
       comp.sec = other.getYear();
@@ -205,7 +208,15 @@ void Movie::clear() {
  * @return
  */
 Movie &Movie::operator=(const Movie &rhs) {
-  
+  if(this == &rhs || *this == rhs)return *this;
+  this->clear();
+  setType(rhs.getType());
+  setTitle(rhs.getTitle());
+  setYear(rhs.getYear());
+  director = rhs.getDirector();
+  genre = rhs.getGenre();
+  actors = vector<string>(rhs.actors);
+  comp = Comparable(rhs.comp.gnr, rhs.comp.prim, rhs.comp.sec );
   return *this;
 }
 

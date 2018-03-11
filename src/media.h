@@ -25,6 +25,7 @@ public:
   string getTitle()const {return this->title;};
   string getYear()const {return this->year;};
   
+  
   // we can't create ostream& as being a pure virtual function
   // instead we can create a custom function that takes in an ostream
   // reference, feeds it the desired data, and then returns that object to
@@ -49,6 +50,14 @@ public:
     }
     os << ", " << title << ", " << year << std::endl;
   }
+
+protected:
+  
+  void setType(const MediaType& mt){ type = mt; }
+  
+  void setTitle(const string& ttl){ title = ttl;}
+  
+  void setYear(const string& yr){ year = yr;}
   
 private:
   
