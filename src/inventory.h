@@ -88,10 +88,10 @@ class Inventory {
 
 /**
  *
- * @param arg the movie object reference we are going to look for
+ * @param target the movie object reference we are going to look for
  * @return
  */
-  bool isMovieCheckedOut(Movie arg);
+  bool isMovieCheckedOut(const Movie &target);
 
 
   ~Inventory();

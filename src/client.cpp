@@ -51,6 +51,10 @@ string Client::comparableName() const {
   return this->firstName + this->lastName;
 }
 
-bool operator==(const Client& l, const Client& r){
+bool operator==(const Client& l, const Client& r) {
   return l.getName() == r.getName();
+}
+
+bool operator!=(const Client &l, const Client &r)  {
+  return !(l == r);
 }

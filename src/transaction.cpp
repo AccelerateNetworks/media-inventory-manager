@@ -27,16 +27,16 @@ uint64_t Transaction::unixTimeCheckedOut() const {
 }
 
 bool Transaction::contains(const Movie &arg) const {
-  for(const Movie& itm : contents)if(arg.getTitle() == itm.getTitle()) {
+  for(const Movie* itm : contents)if(arg.getTitle() == itm->getTitle() ) {
       return true;
     }
   return false;
 }
 
-std::vector<Movie> Transaction::getContents() {
+std::vector<Movie*> Transaction::getContents() {
   return contents;
 }
 
-void Transaction::addMovie(Movie m){
+void Transaction::addMovie(Movie *m){
   this->contents.push_back(m);
 }

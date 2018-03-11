@@ -2,15 +2,36 @@
 #define HASHTABLE_H
 
 #include <vector>
+#include <iostream>
 
 template<class K, class V>
 class HashTable {
-
+  static const int map_end = {96};
   // nested struct to keep everything nice and civil
   struct bucket {
-    K              hash;
-    std::vector<K> Keys;
-    std::vector<V> Values;
+    std::vector<std::pair<K,V>> kv;
+    /** determines if the given key, target, is in this bucket
+     * If hash properly distributes items across table, this should
+     * have O(1) time.
+     * @param target
+     * @return index position of target if found, else -1
+     */
+    int contains(const K& target)const {
+      int idx = 0;
+      while(idx < (int)kv.size() && kv[idx].first != target)++idx;
+      return (idx < kv.size() && kv[idx].first == target)?idx : -1;
+    }
+    
+    /** following the STL general nomenclature for pushing items back into
+     *  a container.
+     *
+     * @param itm the std::pair<K,V> object linking the key to the val
+     */
+    void push_back(std::pair<K,V> itm){
+      kv.push_back(itm);
+    }
+//    std::vector<K> Keys;
+//    std::vector<V> Values;
   };
 
 private:
@@ -27,7 +48,7 @@ private:
   // number of entries
   int                 numberOfEntries = 0;
   // underlying implementation
-  bucket* map[96];
+  bucket* map[map_end];
 
 public:
   // constructor takes a pointer to a
@@ -39,7 +60,8 @@ public:
   // creates a new bucket if the hash
   // does not already exist
   void enroll(K, V);
-
+  
+  
   // retrieves a value from a key
   V* get(K);
 
@@ -47,8 +69,8 @@ public:
   int getNumberOfEntries();
 
   // return all movies sorted like they need to be
-  static std::vector<V>
-  retrieveAllValues(HashTable<K, V>, bool(*sortComparator)(V, V));
+//  static std::vector<V>
+//  retrieveAllValues(HashTable<K, V>, bool(*sortComparator)(V, V));
 
   // helper function for unit testing purposes
   int getHash(K);
@@ -56,6 +78,7 @@ public:
 
 template <class K, class V>
   HashTable<K, V>::HashTable(int(*hashFunction)(const K &)){
+  std::cout << "map_end = " << map_end << std::endl;
   this->hasher = hashFunction;
   this->numberOfEntries = 0;
 }
@@ -69,8 +92,8 @@ template<class K, class V>
 void HashTable<K,V>::enroll(K key, V val){
 
   int index = hasher(key);
-
-  if(map[index] == nullptr){
+  if(index > map_end)index %= map_end;
+  if( map[index] == nullptr ){
     map[index] = new bucket();
   }
 
@@ -78,11 +101,10 @@ void HashTable<K,V>::enroll(K key, V val){
     this->update(key, val, map[index]);
     return;
   }
-
-  map[index]->Keys.push_back(key);
-  map[index]->Values.push_back(val);
-  ++this->numberOfEntries;
-  return;
+  map[index]->push_back(std::make_pair(key,val));
+//  map[index]->Keys.push_back(key);
+//  map[index]->Values.push_back(val);
+  ++(this->numberOfEntries);
 }
 
 template<class K, class V>
@@ -93,13 +115,16 @@ return hasher(arg);
 template<class K, class V>
   V* HashTable<K, V>::getFromBucket(K key, bucket* b){
 
-  for(unsigned int i = 0; i < b->Keys.size(); i++){
-    if(b->Keys[i] == key) return &b->Values[i];
-    V* a = &(b->Values[i]);
-    return a;
-  }
-
-  throw "Internal Logic Error: HashTable::getFromBucket()";
+//  for(int i = 0; i < b->Keys.size(); i++){
+//    if(b->Keys[i] == key) return &b->Values[i];
+//    V* a = &(b->Values[i]);
+//    return a;
+//  }
+    int idx = b->contains(key);
+    if(idx >= 0){
+      return &(b->kv[idx].second);
+    }
+    throw "Internal Logic Error: HashTable::getFromBucket()";
 }
 
 template<class K, class V>
@@ -115,21 +140,26 @@ template<class K, class V>
 
 template<class K, class V>
   bool HashTable<K,V>::isInBucket(K key, bucket* b){
-  for(K keymaybe : b->Keys){
-    if(keymaybe == key) return true;
-  }
-
-  return false;
+//  for(K keymaybe : b->Keys){
+//    if(keymaybe == key) return true;
+//  }
+//  return false;
+    return b->contains(key) >= 0;
 }
 
 template<class K, class V>
   void HashTable<K,V>::update(K key, V val, bucket* b){
-  for(unsigned int i = 0; i < b->Keys.size(); i++){
-    if(b->Keys[i] == key){
-      b->Values[i] = val;
-      return;
+//  for(int i = 0; i < b->Keys.size(); i++){
+//    if(b->Keys[i] == key){
+//      b->Values[i] = val;
+//      return;
+//    }
+//  }
+    
+    int idx = b->contains(key);
+    if(idx >= 0){
+      b->kv[idx].second = val;
     }
-  }
 
   throw "Internal Logic Error: HashTable::update()";
 }
@@ -142,5 +172,7 @@ template<class K, class V>
     }
   }
 }
+
+
 
 #endif //HASHTABLE_H

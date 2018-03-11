@@ -8,7 +8,7 @@
   </XMI.documentation>
   <XMI.metamodel href="UML.xml" xmi.version="1.4" xmi.name="UML"/>
  </XMI.header>
- <XMI.content>
+ <XMI.kv>
   <UML:Model name="UML Model" isLeaf="false" isSpecification="false" xmi.id="m1" isAbstract="false" isRoot="false">
    <UML:Namespace.ownedElement>
     <UML:Stereotype isLeaf="false" name="folder" namespace="m1" isSpecification="false" xmi.id="folder" isAbstract="false" visibility="public" isRoot="false"/>
@@ -337,7 +337,7 @@
     </UML:Model>
    </UML:Namespace.ownedElement>
   </UML:Model>
- </XMI.content>
+ </XMI.kv>
  <XMI.extensions xmi.extender="umbrello">
   <docsettings uniqueid="uEseTeev7BEa0" documentation="" viewid="ujNXJjM1fPWID"/>
   <listview>

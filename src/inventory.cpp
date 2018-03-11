@@ -1,7 +1,5 @@
 #include "inventory.h"
 
-
-
 /** Add an item to the contents hashmap
  *
  * @param arg a Movie pointer to the movie object we want to add to the
@@ -47,17 +45,19 @@ bool Inventory::newTransaction(const string &customer, const string &title,
                                const string &year, const string &director,
                                const string &actor){
 
-  Movie m = this->getItem(title, year, director, actor);
+  Movie* m{nullptr};
+  *m = this->getItem(title, year, director, actor);
 
-  if(isMovieCheckedOut(m)){
+  if(isMovieCheckedOut(*m)){
     return false;
   }
 
   vector<Transaction>* b = *(this->transactionLog->get(getClient(customer)));
 
-  Transaction *t = new Transaction();
+  auto *t = new Transaction();
   t->addMovie(m);
   b->push_back(*t);
+  return true;
 }
 
 /**
@@ -70,15 +70,18 @@ void Inventory::addClient(Client &c){
 
 /**
  *
- * @param c
- * @return
+ * @param c the string representing a client's space seperated first then
+ * last name.
+ * @return returns a copy of the client object
  */
 Client Inventory::getClient(const string &c){
-  for(Client i : this->clientelle){
+  for(Client& i : this->clientelle){
     if(i.getName() == c){
       return i;
     }
   }
+  throw "Internal Logic Error: Inventory::addClient(Client &c)";
+  
 }
 
 /**
@@ -90,14 +93,14 @@ void Inventory::printAllMedia(){
 
 /**
  *
- * @param arg the movie object reference we are going to look for
- * @return
+ * @param target the movie object reference we are going to look for
+ * @return a bool indicating if we succesfully found the target movie
  */
-bool Inventory::isMovieCheckedOut(Movie arg){
+bool Inventory::isMovieCheckedOut(const Movie &target){
   for(Client& c : clientelle){
 
     for(Transaction& t : **transactionLog->get(c)){
-      if(t.contains(arg) && !t.isReturned ){
+      if(t.contains(target) && !t.isReturned ){
         return true;
       }
     }

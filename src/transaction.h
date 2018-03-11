@@ -35,7 +35,7 @@ class Transaction {
   
 
   
-  std::vector<Movie> contents;
+  std::vector<Movie*> contents;
   std::time_t unixTimeOfCheckout{system_clock::to_time_t(system_clock::now())};
   std::time_t unixTimeDue{calc_return_date(3)};
   
@@ -48,8 +48,8 @@ public:
   bool isDue()const;
   uint64_t unixTimeCheckedOut()const;
   bool contains(const Movie& arg)const;
-  std::vector<Movie> getContents();
-  void addMovie(Movie);
+  std::vector<Movie*> getContents();
+  void addMovie(Movie *);
   bool isReturned = false;
   
   
