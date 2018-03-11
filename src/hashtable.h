@@ -6,7 +6,9 @@
 
 template<class K, class V>
 class HashTable {
+  
   static const int map_end = {96};
+  
   // nested struct to keep everything nice and civil
   struct bucket {
     std::vector<std::pair<K,V>> kv;
@@ -19,7 +21,7 @@ class HashTable {
     int contains(const K& target)const {
       int idx = 0;
       while(idx < (int)kv.size() && kv[idx].first != target)++idx;
-      return (idx < kv.size() && kv[idx].first == target)?idx : -1;
+      return (idx < (int)kv.size() && kv[idx].first == target)? idx : -1;
     }
     
     /** following the STL general nomenclature for pushing items back into
@@ -30,8 +32,6 @@ class HashTable {
     void push_back(std::pair<K,V> itm){
       kv.push_back(itm);
     }
-//    std::vector<K> Keys;
-//    std::vector<V> Values;
   };
 
 private:
@@ -45,6 +45,8 @@ private:
   // updates a keypair
   void update(K, V, bucket*);
 
+  void update(int idx, K key, V val, bucket *b);
+  
   // number of entries
   int                 numberOfEntries = 0;
   // underlying implementation
@@ -74,8 +76,15 @@ public:
 
   // helper function for unit testing purposes
   int getHash(K);
+  
 };
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param hashFunction
+ */
 template <class K, class V>
   HashTable<K, V>::HashTable(int(*hashFunction)(const K &)){
   std::cout << "map_end = " << map_end << std::endl;
@@ -83,43 +92,64 @@ template <class K, class V>
   this->numberOfEntries = 0;
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @return
+ */
 template <class K, class V>
   int HashTable<K,V>::getNumberOfEntries(){
   return this->numberOfEntries;
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @param val
+ */
 template<class K, class V>
 void HashTable<K,V>::enroll(K key, V val){
 
   int index = hasher(key);
-  if(index > map_end)index %= map_end;
+  if(index >= map_end)index %= map_end;
   if( map[index] == nullptr ){
     map[index] = new bucket();
   }
-
-  if(this->isInBucket(key,map[index])){
-    this->update(key, val, map[index]);
+  
+  int idx = map[index]->contains(key);
+  if(idx >= 0){
+    this->update(idx,key, val, map[index]);
     return;
   }
   map[index]->push_back(std::make_pair(key,val));
-//  map[index]->Keys.push_back(key);
-//  map[index]->Values.push_back(val);
   ++(this->numberOfEntries);
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param arg
+ * @return
+ */
 template<class K, class V>
 int HashTable<K,V>::getHash(K arg){
 return hasher(arg);
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @param b
+ * @return
+ */
 template<class K, class V>
   V* HashTable<K, V>::getFromBucket(K key, bucket* b){
-
-//  for(int i = 0; i < b->Keys.size(); i++){
-//    if(b->Keys[i] == key) return &b->Values[i];
-//    V* a = &(b->Values[i]);
-//    return a;
-//  }
     int idx = b->contains(key);
     if(idx >= 0){
       return &(b->kv[idx].second);
@@ -127,6 +157,13 @@ template<class K, class V>
     throw "Internal Logic Error: HashTable::getFromBucket()";
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @return
+ */
 template<class K, class V>
   V* HashTable<K,V>::get(K key){
 
@@ -134,28 +171,32 @@ template<class K, class V>
   if(map[index] == nullptr) return nullptr;
   if(!isInBucket(key, map[index])) return nullptr;
 
-  V* a = getFromBucket(key, map[index]);
-  return a;
+  return getFromBucket(key, map[index]);
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @param b
+ * @return
+ */
 template<class K, class V>
   bool HashTable<K,V>::isInBucket(K key, bucket* b){
-//  for(K keymaybe : b->Keys){
-//    if(keymaybe == key) return true;
-//  }
-//  return false;
     return b->contains(key) >= 0;
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param key
+ * @param val
+ * @param b
+ */
 template<class K, class V>
   void HashTable<K,V>::update(K key, V val, bucket* b){
-//  for(int i = 0; i < b->Keys.size(); i++){
-//    if(b->Keys[i] == key){
-//      b->Values[i] = val;
-//      return;
-//    }
-//  }
-    
     int idx = b->contains(key);
     if(idx >= 0){
       b->kv[idx].second = val;
@@ -164,15 +205,40 @@ template<class K, class V>
   throw "Internal Logic Error: HashTable::update()";
 }
 
+
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @tparam V
+ * @tparam K
+ * @param idx
+ * @param key not used in this case other than to let compiler determin K's type
+ * @param val
+ * @param b
+ */
+template<class K, class V>
+  void HashTable<K,V>::update(int idx,K key, V val, bucket* b){
+    if(idx >= 0){
+      b->kv[idx].second = val;
+    }
+    key = key;  // this is just to squelch the warning that key was unused.
+    throw "Internal Logic Error: HashTable::update()";
+  }
+
+/**
+ *
+ * @tparam K
+ * @tparam V
+ */
 template<class K, class V>
   HashTable<K,V>::~HashTable(){
-  for(int i = 0; i <= 95; ++i){
+  for(int i = 0; i < map_end; ++i){
     if(map[i] != nullptr){
       delete map[i];
     }
   }
+//  delete[] map;   // I'm not too certain on delete actually, why not use
+                    // delete[] map; ?
 }
-
-
-
 #endif //HASHTABLE_H
