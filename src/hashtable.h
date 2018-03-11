@@ -114,7 +114,7 @@ template<class K, class V>
 void HashTable<K,V>::enroll(K key, V val){
 
   int index = hasher(key);
-  if(index > map_end)index %= map_end;
+  if(index >= map_end)index %= map_end;
   if( map[index] == nullptr ){
     map[index] = new bucket();
   }
@@ -171,7 +171,7 @@ template<class K, class V>
   if(map[index] == nullptr) return nullptr;
   if(!isInBucket(key, map[index])) return nullptr;
 
-  return getFromBucket(key, map[index]);;
+  return getFromBucket(key, map[index]);
 }
 
 /**
@@ -233,7 +233,7 @@ template<class K, class V>
  */
 template<class K, class V>
   HashTable<K,V>::~HashTable(){
-  for(int i = 0; i <= 95; ++i){
+  for(int i = 0; i < map_end; ++i){
     if(map[i] != nullptr){
       delete map[i];
     }
