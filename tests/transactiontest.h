@@ -19,7 +19,7 @@ namespace transaction_test {
  *                   individual test case being conducted
  * @return a boolean value stating if the test failed or if it threw an error
  */
-  bool test_transaction_constructor_implementation(const bool &be_verbose) {
+  bool test_transaction_constructor(const bool &be_verbose) {
     
     bool all_tests_passed = true;
     
@@ -54,7 +54,7 @@ namespace transaction_test {
     return all_tests_passed;
   };
   
-  bool test_transaction_isDue_function_implementation(const bool &be_verbose,Transaction &t) {
+  bool test_transaction_isDue_function(const bool &be_verbose,Transaction &t) {
     if (be_verbose) {
       cout << "[+] test Transaction::isDue() function for class Transaction"
            << endl;
@@ -67,7 +67,7 @@ namespace transaction_test {
     return true;
   }
   
-  bool test_unixTimeCheckedOut_implementation(const bool &be_verbose,Transaction &t) {
+  bool test_unixTimeCheckedOut(const bool &be_verbose,Transaction &t) {
       if (be_verbose) {
         cout << "[+] test Transaction::unixTimeCheckedOut() function for class Transaction"
              << endl;
@@ -96,12 +96,12 @@ namespace transaction_test {
     int x = testNameLen;
     
     
-    std::string funcName = "test_transaction_constructor_implementation";
+    std::string funcName = "test_transaction_constructor";
     // testing the Transaction constructor as an independent object.
     cout << left << setw(pf) << "[+] performing test" << left << ":"
          << setw(x) << right << funcName
          << endl;
-    if (test_transaction_constructor_implementation(be_verbose)) {
+    if (test_transaction_constructor(be_verbose)) {
       test_passed_output(funcName);
       
       // if the ctor test has succeeded, we are safe to proceed with all other
@@ -111,24 +111,24 @@ namespace transaction_test {
       Transaction t_0day = Transaction(0);
       Transaction t_1day = Transaction(1);
       
-      funcName = "test_transaction_isDue_function_implementation";
+      funcName = "test_transaction_isDue_function";
       // testing the Transaction constructor as an independent object.
       cout << left << setw(pf) << "[+] performing test" << left << ":"
            << setw(x) << right << funcName
            << endl;
-      if (test_transaction_isDue_function_implementation(be_verbose, t_3day)) {
+      if (test_transaction_isDue_function(be_verbose, t_3day)) {
         test_passed_output(funcName);
       } else {
         test_failed_outptut(funcName);
         all_passed = false;
       }
   
-      funcName = "test_unixTimeCheckedOut_implementation";
+      funcName = "test_unixTimeCheckedOut";
       // testing the Transaction constructor as an independent object.
       cout << left << setw(pf) << "[+] performing test" << left << ":"
            << setw(x) << right << funcName
            << endl;
-      if (test_unixTimeCheckedOut_implementation(be_verbose, t_3day)) {
+      if (test_unixTimeCheckedOut(be_verbose, t_3day)) {
         test_passed_output(funcName);
       } else {
         test_failed_outptut(funcName);

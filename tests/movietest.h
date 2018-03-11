@@ -19,7 +19,7 @@ namespace movie_test {
  * @param be_verbose
  * @return
  */
-  bool test_classic_constructor_implementations(const bool &be_verbose) {
+  bool test_classic_constructor(const bool &be_verbose) {
     if (be_verbose) {
       cout << "[+] test classic1 construction: Casablanca classic movie entry "
           "for Classic class" << endl;
@@ -51,7 +51,7 @@ namespace movie_test {
  * @param be_verbose
  * @return
  */
-  bool test_drama_constructor_implementations(const bool &be_verbose) {
+  bool test_drama_constructor(const bool &be_verbose) {
     
     if (be_verbose) {
       cout
@@ -79,7 +79,7 @@ namespace movie_test {
  * @param be_verbose
  * @return
  */
-  bool test_comedy_constructor_implementations(const bool &be_verbose) {
+  bool test_comedy_constructor(const bool &be_verbose) {
     
     if (be_verbose) {
       cout
@@ -136,7 +136,7 @@ namespace movie_test {
       }
       Movie classic1("Casablanca", "194208", "Michael Curtiz","C","Ingrid Bergman");
     } catch(std::exception& e){
-      test_classic_constructor_implementations(be_verbose);
+      test_classic_constructor(be_verbose);
     }
   
   
@@ -148,7 +148,7 @@ namespace movie_test {
       }
       Movie classic2("Casablanca","194208","Michael Curtiz","C","Humphrey Bogart");
     }catch(std::exception& e){
-      test_classic_constructor_implementations(be_verbose);
+      test_classic_constructor(be_verbose);
     }
   
     try{
@@ -159,7 +159,7 @@ namespace movie_test {
       }
       Movie drama1("Good Morning Vietnam","1988","Barry Levinson", "D");
     }catch(std::exception& e){
-      test_drama_constructor_implementations(be_verbose);
+      test_drama_constructor(be_verbose);
     }
   
     try{
@@ -169,7 +169,7 @@ namespace movie_test {
       }
       Movie drama2("Good Will Hunting","2000","Gus Van Sant", "D");
     }catch(std::exception& e){
-      test_drama_constructor_implementations(be_verbose);
+      test_drama_constructor(be_verbose);
     }
   
     try{
@@ -180,7 +180,7 @@ namespace movie_test {
       }
       Movie comedy1("Pirates of the Caribbean","2003","Gore Verbinski", "F");
     }catch(std::exception& e){
-      test_comedy_constructor_implementations(be_verbose);
+      test_comedy_constructor(be_verbose);
     }
   
     try{
@@ -190,7 +190,7 @@ namespace movie_test {
       }
       Movie comedy2("Fargo","1996","Joel Coen", "F");
     }catch(std::exception& e){
-      test_comedy_constructor_implementations(be_verbose);
+      test_comedy_constructor(be_verbose);
     }
     return true;
   };
@@ -225,32 +225,32 @@ namespace movie_test {
       
       // testing classic parameters in ctor
       cout << left << setw(pf) << "[+] performing test" << left << ":"
-           << setw(l) << right << "test_classic_constructor_implementations"
+           << setw(l) << right << "test_classic_constructor"
            << endl;
       if (test_each_genre_constructor_implementation(be_verbose)) {
-        test_passed_output("test_classic_constructor_implementations");
+        test_passed_output("test_classic_constructor");
       } else {
-        test_failed_outptut("test_classic_constructor_implementations");
+        test_failed_outptut("test_classic_constructor");
       }
       
       // testing drama parameters in ctor
       cout << left << setw(pf) << "[+] performing test" << left << ":"
-           << setw(l) << right << "test_drama_constructor_implementations"
+           << setw(l) << right << "test_drama_constructor"
            << endl;
       if (test_each_genre_constructor_implementation(be_verbose)) {
-        test_passed_output("test_drama_constructor_implementations");
+        test_passed_output("test_drama_constructor");
       } else {
-        test_failed_outptut("test_drama_constructor_implementations");
+        test_failed_outptut("test_drama_constructor");
       }
       
       // testing comedy parameters in ctor
       cout << left << setw(pf) << "[+] performing test" << left << ":"
-           << setw(l) << right << "test_comedy_constructor_implementations"
+           << setw(l) << right << "test_comedy_constructor"
            << endl;
       if (test_each_genre_constructor_implementation(be_verbose)) {
-        test_passed_output("test_comedy_constructor_implementations");
+        test_passed_output("test_comedy_constructor");
       } else {
-        test_failed_outptut("test_comedy_constructor_implementations");
+        test_failed_outptut("test_comedy_constructor");
       }
     }
   }
