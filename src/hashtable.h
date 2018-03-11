@@ -21,7 +21,7 @@ class HashTable {
     int contains(const K& target)const {
       int idx = 0;
       while(idx < (int)kv.size() && kv[idx].first != target)++idx;
-      return (idx < kv.size() && kv[idx].first == target)?idx : -1;
+      return (idx < (int)kv.size() && kv[idx].first == target)?idx : -1;
     }
     
     /** following the STL general nomenclature for pushing items back into
@@ -222,7 +222,7 @@ template<class K, class V>
     if(idx >= 0){
       b->kv[idx].second = val;
     }
-    
+    key = key;  // this is just to squelch the warning that key was unused.
     throw "Internal Logic Error: HashTable::update()";
   }
 
