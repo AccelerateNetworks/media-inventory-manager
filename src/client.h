@@ -12,7 +12,7 @@ class Client {
   string firstName, lastName;
 
   static int GET_NEXT_ID();
-  
+
   string comparableName()const;
 
  public:
