@@ -4,11 +4,22 @@
 
 enum class MediaType;
 
+int Movie::NEXT_ID = 0;
+
 Movie::Movie()
     :Media(MediaType::MOVIE, "", "201800"),
      director(""),
-     genre("")
+     genre(""),
+     id(GETNEXTID())
 {}
+
+int Movie::GETNEXTID(){
+  return NEXT_ID++;
+}
+
+int Movie::getId(){
+  return this->id;
+}
 
 /**
  *
@@ -20,7 +31,8 @@ Movie::Movie()
 Movie::Movie(string title, string year, string director, string genre)
   : Media(MediaType::MOVIE, std::move(title), std::move(year)),
     director(std::move(director)),
-    genre(std::move(genre)) {
+    genre(std::move(genre)),
+    id(GETNEXTID()){
   comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
   switch (comp.gnr){
     case static_cast<char>(MovieType::COMEDY):
@@ -47,7 +59,8 @@ Movie::Movie(string title, string year, string director, string genre,
              string actor)
     :Media(MediaType::MOVIE, std::move(title), std::move(year)),
      director(std::move(director)),
-     genre(std::move(genre))  {
+     genre(std::move(genre)),
+     id(GETNEXTID()) {
    
   actors.push_back(actor);
   
@@ -78,7 +91,8 @@ Movie::Movie(string title, string year, string director, string genre,
 Movie::Movie(const Movie &other)
     :Media(MediaType::MOVIE, (other.getTitle()),(other.getYear())),
      director(other.getDirector()),
-     genre(other.getGenre()){
+     genre(other.getGenre()),
+     id(GETNEXTID()){
   
   comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
   

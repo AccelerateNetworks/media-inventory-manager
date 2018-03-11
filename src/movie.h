@@ -19,19 +19,24 @@ enum class MovieType : char { COMEDY = 'F', DRAMA = 'D', CLASSIC = 'C',
   DEFAULT = ' '};
 
 class Movie : public Media {
-  
+
+  int id;
+  static int NEXT_ID;
   string director;
   string genre;
   vector<string> actors;
-  
-  
+
+  static int GETNEXTID();
+
   // for safety, I'm adding a functino for clearing the existing contents of a
   // Movie object to make it safe for the assignment operator.
   
   void clear();
   
  public:
-  
+
+  int getId();
+
   Movie();
   
   /**
@@ -93,8 +98,6 @@ class Movie : public Media {
    * @param os
    */
   void feedToOutstream(std::ostream &os) const override;
-  
-
   
   // assignment operator overload:
   
