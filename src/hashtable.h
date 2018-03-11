@@ -18,7 +18,7 @@ private:
   int (*hasher)(K);
 
   // finds correct val in a bucket
-  V getFromBucket(K, bucket*);
+  V* getFromBucket(K, bucket*);
   bool isInBucket(K, bucket*);
 
   // updates a keypair
@@ -91,13 +91,15 @@ return hasher(arg);
 }
 
 template<class K, class V>
-  V HashTable<K, V>::getFromBucket(K key, bucket* b){
+  V* HashTable<K, V>::getFromBucket(K key, bucket* b){
 
   for(int i = 0; i < b->Keys.size(); i++){
-    if(b->Keys[i] == key) return b->Values[i];
+    if(b->Keys[i] == key) return &b->Values[i];
+    V* a = &(b->Values[i]);
+    return a;
   }
 
-    throw "Internal Logic Error: HashTable::getFromBucket()";
+  throw "Internal Logic Error: HashTable::getFromBucket()";
 }
 
 template<class K, class V>
@@ -107,8 +109,7 @@ template<class K, class V>
   if(map[index] == nullptr) return nullptr;
   if(!isInBucket(key, map[index])) return nullptr;
 
-  V* a;
-  *a = getFromBucket(key, map[index]);
+  V* a = getFromBucket(key, map[index]);
   return a;
 }
 

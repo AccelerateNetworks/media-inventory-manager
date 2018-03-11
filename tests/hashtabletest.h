@@ -30,11 +30,16 @@ void hashTableConstructorTest(){
 }
 
 void hashTableEnrollTest(){
+  int* a;
+
   try{
     testTable.enroll(2, 4);
-    if(*testTable.get(2)!=4){
-      throw "Failed enroll test at first get()";
+    a = testTable.get(2);
+    if(a == nullptr){
+      throw "Failed enroll test at first get(): returned nullptr";
     }
+    if(*a != 4) throw "failed enroll test at first get(): wrong val";
+
     testTable.enroll(2, 5);
     if(*testTable.get(2)!=5){
       throw "Failed enroll test at second get()";
