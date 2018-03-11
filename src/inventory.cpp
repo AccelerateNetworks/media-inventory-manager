@@ -5,18 +5,12 @@
  * @param arg a Movie pointer to the movie object we want to add to the
  * contents hashmap
  */
-void Inventory::addItem(Movie* arg){
-  this->contents->enroll(arg->getTitle() + arg->getYear(), *arg);
-}
-
-/**
- *
- * @param title
- * @param year
- * @return
- */
-Movie Inventory::getItem(const string &title, const string &year){
-  return *(this->contents->get(title+year));
+void Inventory::addItem(Movie arg){
+  vector<Movie>* v = this->contents->get(arg.getTitle() +
+                                         arg.getYear() +
+                                         arg.getDirector() +
+                                         arg.getActor());
+  v->push_back(arg);
 }
 
 /**
@@ -27,9 +21,15 @@ Movie Inventory::getItem(const string &title, const string &year){
  * @param actor
  * @return
  */
-Movie Inventory::getItem(const string &title, const string &year,
+Movie Inventory::getFreeCopy(const string &title, const string &year,
                          const string &director, const string &actor){
-  return *(this->contents->get(title+year+director+actor));
+  for(Movie m : **this->contents->get(title+year+director+actor)){
+    if(!isMovieCheckedOut(m)){
+      return m;
+    }
+  }
+
+  return {};
 }
 
 /**
@@ -45,17 +45,12 @@ bool Inventory::newTransaction(const string &customer, const string &title,
                                const string &year, const string &director,
                                const string &actor){
 
-  Movie* m{nullptr};
-  *m = this->getItem(title, year, director, actor);
+  Movie m = getFreeCopy(title, year, director, actor);
+  if(m == NULL) return false;
 
-  if(isMovieCheckedOut(*m)){
-    return false;
-  }
-
-  vector<Transaction>* b = *(this->transactionLog->get(getClient(customer)));
-
-  auto *t = new Transaction();
+  Transaction* t = new Transaction();
   t->addMovie(m);
+  vector<Transaction>* b = *(this->transactionLog->get(getClient(customer)));
   b->push_back(*t);
   return true;
 }
@@ -66,6 +61,7 @@ bool Inventory::newTransaction(const string &customer, const string &title,
  */
 void Inventory::addClient(Client &c){
   this->clientelle.push_back(c);
+  this->transactionLog->enroll(c, new vector<Transaction>);
 }
 
 /**
@@ -81,7 +77,6 @@ Client Inventory::getClient(const string &c){
     }
   }
   throw "Internal Logic Error: Inventory::addClient(Client &c)";
-  
 }
 
 /**
@@ -98,13 +93,13 @@ void Inventory::printAllMedia(){
  */
 bool Inventory::isMovieCheckedOut(const Movie &target){
   for(Client& c : clientelle){
-
     for(Transaction& t : **transactionLog->get(c)){
       if(t.contains(target) && !t.isReturned ){
         return true;
       }
     }
   }
+
   return false;
 }
 
@@ -124,7 +119,6 @@ bool Inventory::returnItem(const string &title, const string &year,
     // t is a reference so that we can manipulate the contents of translog
     for(Transaction& t : **transactionLog->get(c)){
       if(t.contains(a) && !t.isReturned){
-        
         return (t.isReturned = true); // assignment is intentional, don't change
       }
     }

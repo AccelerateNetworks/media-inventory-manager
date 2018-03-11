@@ -26,8 +26,8 @@ uint64_t Transaction::unixTimeCheckedOut() const {
   return (uint64_t)unixTimeOfCheckout;
 }
 
-bool Transaction::contains(const Movie &arg) const {
-  for(const Movie* itm : contents)if(arg.getTitle() == itm->getTitle() ) {
+bool Transaction::contains( Movie &arg) const {
+  for (const Movie* itm : contents) if (arg.getId() == itm->getId() ) {
       return true;
     }
   return false;

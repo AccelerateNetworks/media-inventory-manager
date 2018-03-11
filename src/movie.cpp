@@ -231,6 +231,7 @@ Movie &Movie::operator=(const Movie &rhs) {
   genre = rhs.getGenre();
   actors = vector<string>(rhs.actors);
   comp = Comparable(rhs.comp.gnr, rhs.comp.prim, rhs.comp.sec );
+  id = rhs.getId():
   return *this;
 }
 
@@ -248,10 +249,7 @@ Movie &Movie::operator=(const Movie &rhs) {
  *              return false;
  */
 bool Movie::operator==(const Movie &rhs) const {
-  if(comp.gnr == rhs.comp.gnr){
-    if(comp.prim == rhs.comp.prim)return comp.sec == rhs.comp.sec;
-  }
-  return false;
+  return this->id == rhs.getId();
 }
 
 /**

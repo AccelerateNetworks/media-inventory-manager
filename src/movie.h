@@ -24,7 +24,7 @@ class Movie : public Media {
   static int NEXT_ID;
   string director;
   string genre;
-  vector<string> actors;
+  string actors;
 
   static int GETNEXTID();
 
@@ -106,7 +106,7 @@ class Movie : public Media {
    * @param rhs
    * @return
    */
-  Movie&operator=(const Movie& rhs);
+  Movie& operator=(const Movie& rhs);
   
   // equality operator overloads:
   

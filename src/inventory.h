@@ -26,42 +26,37 @@ int hashc(const Client& c){
 }
 
 class Inventory {
-  HashTable<string, Movie>* contents{ new HashTable<string, Movie>(hash)};
+  HashTable<string, vector<Movie>*>* contents
+    = new HashTable<string, vector<Movie>*>(hash);
   HashTable<Client, vector<Transaction>*>* transactionLog
-                 {new HashTable<Client, vector<Transaction>*>(hashc)};
+    = new HashTable<Client, vector<Transaction>*>(hashc);
   vector<Client> clientelle{};
   Client getClient(const string &name);
 
  public:
-  
+
   // empty ctor to handle non-trivial member variable instantiation.
   Inventory() = default;
-  
-  
-  void addItem(Movie*);
-  
+
+  void addItem(Movie);
+
   /**
-   *
    * @param title
    * @param year
    * @param director
    * @param actor
    * @return
    */
-  Movie getItem(const string &title, const string &year, const string &director,
-                const string &actor);
-  
+  Movie getFreeCopy(const string &title, const string &year,
+                    const string &director, const string &actor);
+
   /**
    *
-   * @param title
-   * @param year
-   * @param director
-   * @param actor
+   * @param id
    * @return
    */
-  bool returnItem(const string &title, const string &year,
-                  const string &director, const string &actor);
-  
+  bool returnItem(int id);
+
   /**
    *
    * @param customer
@@ -74,13 +69,13 @@ class Inventory {
   bool newTransaction(const string &customer, const string &title,
                       const string &year, const string &director,
                       const string &actor);
-  
+
   /**
    *
    * @param c
    */
   void addClient(Client &c);
-  
+
   /**
    *
    */
@@ -95,14 +90,13 @@ class Inventory {
 
 
   ~Inventory();
-  
+
   /**
    *
    * @param title
    * @param year
    * @return
    */
-  Movie getItem(const string &title, const string &year);
 };
 
 #endif // INV_H
