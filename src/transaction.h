@@ -49,6 +49,8 @@ public:
   uint64_t unixTimeCheckedOut()const;
   bool contains(const Movie& arg)const;
   std::vector<Movie> getContents();
+  void addMovie(Movie);
+  bool isReturned = false;
   
   
 };

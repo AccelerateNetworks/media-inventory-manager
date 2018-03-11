@@ -37,3 +37,6 @@ std::vector<Movie> Transaction::getContents() {
   return contents;
 }
 
+void Transaction::addMovie(Movie m){
+  this->contents.push_back(m);
+}

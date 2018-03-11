@@ -50,3 +50,7 @@ string Client::getName()const {
 string Client::comparableName() const {
   return this->firstName + this->lastName;
 }
+
+bool operator==(const Client& l, const Client& r){
+  return l.getName() == r.getName();
+}

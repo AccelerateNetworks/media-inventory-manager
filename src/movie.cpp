@@ -274,4 +274,3 @@ bool Movie::operator>=(const Movie &rhs) const {
   return !(*this < rhs);
 }
 
-
