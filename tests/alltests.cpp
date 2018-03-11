@@ -26,7 +26,6 @@ int main() {
   hashTableTest();
   cout << "[+]\t\t hashTable testing END" << endl;
   
-  
   cout << endl;
   
   cout << "[+]\t\t class Movie testing START" << endl;
