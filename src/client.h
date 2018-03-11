@@ -24,6 +24,8 @@ class Client {
   bool operator<(const Client &)const;
   bool operator>=(Client)const;
   ostream& operator<<(ostream&);
+
+  friend bool operator==(const Client&, const Client&);
 };
 
 #endif // CLIENT_H

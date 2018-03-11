@@ -117,4 +117,3 @@ void Movie::feedToOutstream(std::ostream &os) const {
     os << s;
   }
 }
-
