@@ -15,7 +15,7 @@ class HashTable {
 
 private:
   // pointer to hash function
-  int (*hasher)(K);
+  int (*hasher)(const K&);
 
   // finds correct val in a bucket
   V* getFromBucket(K, bucket*);
@@ -32,7 +32,7 @@ private:
 public:
   // constructor takes a pointer to a
   // hashing function
-  HashTable(int(*hashFunc)(K));
+  HashTable(int(*hashFunc)(const K &));
   ~HashTable();
 
   // enroll emplaces a key value pair
@@ -55,7 +55,7 @@ public:
 };
 
 template <class K, class V>
-  HashTable<K, V>::HashTable(int(*hashFunction)(K)){
+  HashTable<K, V>::HashTable(int(*hashFunction)(const K &)){
   this->hasher = hashFunction;
   this->numberOfEntries = 0;
 }
