@@ -11,10 +11,14 @@ Movie::Movie()
      director(""),
      genre(""),
      id(GETNEXTID())
-{}
+{
+  comp.gnr = (char)MovieType::DEFAULT;
+  comp.prim = string();
+  comp.sec = string();
+}
 
 int Movie::GETNEXTID(){
-  return NEXT_ID++;
+  return ++NEXT_ID;
 }
 
 int Movie::getId(){
@@ -33,7 +37,9 @@ Movie::Movie(string title, string year, string director, string genre)
     director(std::move(director)),
     genre(std::move(genre)),
     id(GETNEXTID()){
+
   comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
+
   switch (comp.gnr){
     case static_cast<char>(MovieType::COMEDY):
       comp.prim = title;
@@ -62,7 +68,7 @@ Movie::Movie(string title, string year, string director, string genre,
      genre(std::move(genre)),
      id(GETNEXTID()) {
    
-  actors = actor;
+  actor = actor;
   
    comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
    
@@ -88,7 +94,7 @@ Movie::Movie(string title, string year, string director, string genre,
  *
  * @param other
  */
-Movie::Movie( Movie &other)
+Movie::Movie(const Movie &other)
     :Media(MediaType::MOVIE, (other.getTitle()),(other.getYear())),
      director(other.getDirector()),
      genre(other.getGenre()),
@@ -107,21 +113,13 @@ Movie::Movie( Movie &other)
       break;
     case static_cast<char>(MovieType::CLASSIC):
       comp.prim = other.getYear();
-      comp.sec = other.getAllActors()[0];
+      comp.sec = other.getActor()[0];
       actor = other.actor;
       break;
     default:break;
   }
 }
 
-
-/**
- *
- * @param boyo
- */
-void Movie::addActor(string boyo){
-  this->actors.push_back(boyo);
-}
 
 /**
  *
@@ -143,23 +141,8 @@ string Movie::getGenre() const {
  *
  * @return
  */
-vector<string> Movie::getAllActors() const {
-  return this->actors;
-}
-
-/**
- *
- * @param boyoMcBoyeeee
- * @return
- */
-bool Movie::hasActor(string boyoMcBoyeeee) const {
-  for(const string& s : this->actors){
-    if(s == boyoMcBoyeeee){
-      return true;
-    }
-  }
-
-  return false;
+string Movie::getActor() const {
+  return this->actor;
 }
 
 /**
@@ -191,7 +174,7 @@ void Movie::feedToOutstream(std::ostream &os) const {
   if(genre == "F" || genre == "D"){
     os << this->getYear();
   }else if( genre == "C"){
-    for(const auto& itm : actors)os << itm << ", ";
+    for(const auto& itm : actor)os << itm << ", ";
     os << (getYear().length() > 4
           ? getYear().substr(4, 2) + getYear().substr(0, 4)
           : getYear());
@@ -209,7 +192,7 @@ void Movie::clear() {
   
   genre = string();
   director = string();
-  this->actors.clear();
+  this->actor.clear();
   comp.gnr = ' ';
   comp.prim = string();
   comp.sec = string();
@@ -222,14 +205,16 @@ void Movie::clear() {
  * @return
  */
 Movie &Movie::operator=( Movie &rhs) {
+
   if(this == &rhs || *this == rhs)return *this;
+
   this->clear();
   setType(rhs.getType());
   setTitle(rhs.getTitle());
   setYear(rhs.getYear());
   director = rhs.getDirector();
   genre = rhs.getGenre();
-  actors = vector<string>(rhs.actors);
+  actor = rhs.getActor();
   comp = Comparable(rhs.comp.gnr, rhs.comp.prim, rhs.comp.sec );
   id = rhs.getId();
   return *this;

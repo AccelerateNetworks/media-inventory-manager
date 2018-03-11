@@ -6,11 +6,11 @@
  * contents hashmap
  */
 void Inventory::addItem(Movie arg){
-  vector<Movie>* v = this->contents->get(arg.getTitle() +
+  vector<Movie>** v = this->contents->get(arg.getTitle() +
                                          arg.getYear() +
                                          arg.getDirector() +
                                          arg.getActor());
-  v->push_back(arg);
+  (*v)->push_back(arg);
 }
 
 /**
@@ -21,15 +21,14 @@ void Inventory::addItem(Movie arg){
  * @param actor
  * @return
  */
-Movie Inventory::getFreeCopy(const string &title, const string &year,
+Movie& Inventory::getFreeCopy(const string &title, const string &year,
                          const string &director, const string &actor){
-  for(Movie m : **this->contents->get(title+year+director+actor)){
+  for(Movie& m : **this->contents->get(title+year+director+actor)){ // NOLINT
     if(!isMovieCheckedOut(m)){
       return m;
     }
   }
 
-  return {};
 }
 
 /**
@@ -45,8 +44,9 @@ bool Inventory::newTransaction(const string &customer, const string &title,
                                const string &year, const string &director,
                                const string &actor){
 
-  Movie m = getFreeCopy(title, year, director, actor);
-  if(m == NULL) return false;
+  Movie* m{nullptr};
+  *m = getFreeCopy(title, year, director, actor);
+  if(m == nullptr) return false;
 
   Transaction* t = new Transaction();
   t->addMovie(m);
@@ -91,7 +91,7 @@ void Inventory::printAllMedia(){
  * @param target the movie object reference we are going to look for
  * @return a bool indicating if we succesfully found the target movie
  */
-bool Inventory::isMovieCheckedOut(const Movie &target){
+bool Inventory::isMovieCheckedOut( Movie &target){
   for(Client& c : clientelle){
     for(Transaction& t : **transactionLog->get(c)){
       if(t.contains(target) && !t.isReturned ){

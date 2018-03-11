@@ -66,7 +66,7 @@
       </UML:Class>
       <UML:Class isLeaf="false" name="Movie" namespace="Logical_View" isSpecification="false" xmi.id="uEpx2PDooC9jM" isAbstract="false" visibility="public" isRoot="false">
        <UML:Classifier.feature>
-        <UML:Attribute name="actors" isSpecification="false" xmi.id="u6YHDuKJeexHY" visibility="private"/>
+        <UML:Attribute name="actor" isSpecification="false" xmi.id="u6YHDuKJeexHY" visibility="private"/>
         <UML:Attribute name="director" isSpecification="false" xmi.id="uCupR2e35gPJN" visibility="private"/>
         <UML:Attribute name="genre" isSpecification="false" xmi.id="ubADBTCvjlCyK" visibility="private"/>
         <UML:Operation isLeaf="false" name="getGenre" isSpecification="false" isQuery="false" xmi.id="u3EGK8PQryLwO" isOverride="false" isAbstract="false" visibility="public" isRoot="false"/>

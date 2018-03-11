@@ -24,7 +24,7 @@ class Movie : public Media {
   static int NEXT_ID;
   string director;
   string genre;
-  string actors;
+  string actor;
 
   static int GETNEXTID();
 
@@ -62,13 +62,8 @@ class Movie : public Media {
    *
    * @param other
    */
-  Movie(Movie& other);
-  
-  /**
-   *
-   */
-  void addActor(string);
-  
+  Movie(const Movie& other);
+
   /**
    *
    * @return
@@ -85,14 +80,8 @@ class Movie : public Media {
    *
    * @return
    */
-  vector<string> getAllActors() const;
-  
-  /**
-   *
-   * @return
-   */
-  bool hasActor(string) const;
-  
+  string getActor() const;
+
   /**
    *
    * @param os

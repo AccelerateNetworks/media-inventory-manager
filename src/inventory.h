@@ -48,7 +48,7 @@ class Inventory {
    * @param actor
    * @return
    */
-  Movie getFreeCopy(const string &title, const string &year,
+  Movie& getFreeCopy(const string &title, const string &year,
                     const string &director, const string &actor);
 
   /**
@@ -87,17 +87,18 @@ class Inventory {
  * @param target the movie object reference we are going to look for
  * @return
  */
-  bool isMovieCheckedOut(const Movie &target);
+  bool isMovieCheckedOut( Movie &target);
 
 
   ~Inventory();
 
+
   /**
    *
-   * @param title
-   * @param year
+   * @param m
    * @return
    */
+  bool returnItem(Movie m);
 };
 
 #endif // INV_H
