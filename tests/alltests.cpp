@@ -48,5 +48,9 @@ int main() {
   cout << "[+]\t\t class Client testing START" << endl;
   runClientTests();
   cout << "[+]\t\t class Client testing END" << endl;
+
+  cout << "[+] \t\t class Inventory testing START" << endl;
+  inventoryTests();
+  cout << "[+] \t\t class Inventory testing END" << endl;
   return 0;
 }
