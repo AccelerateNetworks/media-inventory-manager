@@ -17,7 +17,7 @@ using std::vector;
  * @param arg the string representation of the Media object's title
  * @return
  */
-int hash(const string& arg){
+int hashs(const string& arg){
   return (int) arg[0];
 }
 
@@ -27,7 +27,7 @@ int hashc(const Client& c){
 
 class Inventory {
   HashTable<string, vector<Movie>*>* contents
-    = new HashTable<string, vector<Movie>*>(hash);
+    = new HashTable<string, vector<Movie>*>(hashs);
   HashTable<Client, vector<Transaction>*>* transactionLog
     = new HashTable<Client, vector<Transaction>*>(hashc);
   vector<Client> clientelle{};

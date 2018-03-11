@@ -1,3 +1,6 @@
+#ifndef WHOOT
+#define WHOOT
+
 #include "inventory.h"
 
 /** Add an item to the contents hashmap
@@ -123,3 +126,4 @@ bool Inventory::returnItem(Movie m){
   }
   return false;
 }
+#endif

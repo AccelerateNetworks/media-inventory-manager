@@ -10,6 +10,7 @@
 #include "movietest.h"
 #include "hashtabletest.h"
 #include "clientTests.cpp"
+#include "inventoryTests.cpp"
 
 using namespace std;
 

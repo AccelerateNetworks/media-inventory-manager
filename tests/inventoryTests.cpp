@@ -1,3 +1,6 @@
+#ifndef INVTEST
+#define INVTEST
+
 #include "../src/inventory.h"
 #include "../src/movie.h"
 #include "../src/client.h"
@@ -6,17 +9,18 @@
 using std::cout;
 using std::endl;
 
-extern Inventory testInv;
-extern Movie testMov("1", "1", "1", "1");
-extern Movie testMov2("1", "1", "1", "1");
-extern Movie testMov3("3", "3", "3", "3");
+ Inventory testInv;
+ Movie testMov("1", "1", "1", "1");
+ Movie testMov2("1", "1", "1", "1");
+ Movie testMov3("3", "3", "3", "3");
 
 void preTestSetup(){
   testInv.addItem(testMov);
   testInv.addItem(testMov2);
   testInv.addItem(testMov3);
 
-  testInv.addClient(Client("Rita","TestyBoy"));
+  Client tc = Client("Rita","TestyBoy");
+  testInv.addClient(tc);
 }
 
 void inventoryEnrollTest(){
@@ -49,3 +53,5 @@ void inventoryTests(){
     cout << "[-] Failed: " << c << endl;
   }
 }
+
+#endif //TESTINV
