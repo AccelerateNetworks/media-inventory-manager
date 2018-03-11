@@ -8,8 +8,11 @@
 using std::cout;
 using std::endl;
 
-extern Client globalClientOne("Sarah", "Anderson");
-extern Client globalClientTwo("Phillip", "Comstock");
+//extern Client globalClientOne("Sarah", "Anderson");
+//extern Client globalClientTwo("Phillip", "Comstock");
+
+Client globalClientOne("Sarah", "Anderson");
+Client globalClientTwo("Phillip", "Comstock");
 
 void clientIDTests();
 void clientNameTests();

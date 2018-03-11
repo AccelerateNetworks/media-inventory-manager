@@ -11,7 +11,8 @@ using namespace std;
 int intHasher(const int& arg){
   return arg % 3;
 }
-extern HashTable<int,int> testTable(&intHasher); // NOLINT
+//extern HashTable<int,int> testTable(&intHasher); // NOLINT
+HashTable<int,int> testTable(&intHasher); // NOLINT
 
 void hashTableEnrollTest();
 void hashTableConstructorTest();

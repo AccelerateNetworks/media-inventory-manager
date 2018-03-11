@@ -93,7 +93,7 @@ return hasher(arg);
 template<class K, class V>
   V* HashTable<K, V>::getFromBucket(K key, bucket* b){
 
-  for(int i = 0; i < b->Keys.size(); i++){
+  for(unsigned int i = 0; i < b->Keys.size(); i++){
     if(b->Keys[i] == key) return &b->Values[i];
     V* a = &(b->Values[i]);
     return a;
@@ -124,7 +124,7 @@ template<class K, class V>
 
 template<class K, class V>
   void HashTable<K,V>::update(K key, V val, bucket* b){
-  for(int i = 0; i < b->Keys.size(); i++){
+  for(unsigned int i = 0; i < b->Keys.size(); i++){
     if(b->Keys[i] == key){
       b->Values[i] = val;
       return;

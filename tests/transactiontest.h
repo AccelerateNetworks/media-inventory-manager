@@ -6,59 +6,12 @@
 #include <iomanip>
 //#include <utility>
 #include "../src/transaction.h"
+#include "formatted_test_output_funcs.h"
 
 
 using namespace std;
 
 namespace transaction_test {
-
-/*
- longest_string_length is used in formatting output of the test functions to
- ensure that we get more readable output from pass/fail reports.
-*/
-  int longest_string_length = 48;
-
-/*
- pf is used to set a minimum width for our pass/fail outputs for more
- readable output from pass/fail reports.
- */
-  int pf = 20;
-
-/**
- *
- * @param testName
- * @param testNameLen
- */
-  void test_passed_output(const string &testName) {
-    int l = longest_string_length;
-    cout << left << setw(pf) << "[+] passed" << left << ":" << setw(l)
-         << right
-         << testName << endl;
-  }
-
-/**
- *
- * @param testName
- * @param testNameLen
- */
-  void test_failed_outptut(const string &testName) {
-    int l = longest_string_length;
-    cout << left << setw(pf) << "[-] failed" << left << ":" << setw(l) <<
-         right
-         << testName << endl;
-  }
-
-
-/*
-Transaction() = default;
-Transaction(int rental_length);
-
-bool isDue()const;
-uint64_t unixTimeCheckedOut()const;
-bool contains(const Movie& arg)const;
-std::vector<Movie> getContents();
- */
-
 
 /**
  *
@@ -93,10 +46,12 @@ std::vector<Movie> getContents();
     }
     try {
       Transaction t(0);
+      
+    } catch (std::exception &e) {
       all_tests_passed = false; // if we get passed Transaction
-    } catch (std::exception &e) {}
+    }
     
-    return true;
+    return all_tests_passed;
   };
   
   bool test_transaction_isDue_function_implementation(const bool &be_verbose,Transaction &t) {
@@ -138,7 +93,7 @@ std::vector<Movie> getContents();
     bool all_passed = true;
     
     // alias to just x in order to keep code more readable.
-    int x = longest_string_length;
+    int x = testNameLen;
     
     
     std::string funcName = "test_transaction_constructor_implementation";

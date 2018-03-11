@@ -5,38 +5,14 @@
 #include <iostream>
 #include <utility>
 #include "../src/movie.h"
+#include "formatted_test_output_funcs.h"
 
 
 using namespace std;
 
 namespace movie_test {
-// length of longest string used in test results output
-  int testNameLen = 48;
 
-// used to set a consistent with for pass or fail results
-  int pf = 20;
 
-/**
- *
- * @param testName
- * @param testNameLen
- */
-  void test_passed_output(const string &testName) {
-    int l = testNameLen;
-    cout << left << setw(pf) << "[+] passed" << left << ":" << setw(l) << right
-         << testName << endl;
-  }
-
-/**
- *
- * @param testName
- * @param testNameLen
- */
-  void test_failed_outptut(const string &testName) {
-    int l = testNameLen;
-    cout << left << setw(pf) << "[-] failed" << left << ":" << setw(l) << right
-         << testName << endl;
-  }
 
 /**
  *

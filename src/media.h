@@ -18,7 +18,7 @@ public:
   }
   
   virtual int hash(){
-  
+    return (int)title.at(0);
   };
   
   MediaType getType()const {return this->type;};
