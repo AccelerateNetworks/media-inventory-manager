@@ -6,7 +6,9 @@
 
 template<class K, class V>
 class HashTable {
+  
   static const int map_end = {96};
+  
   // nested struct to keep everything nice and civil
   struct bucket {
     std::vector<std::pair<K,V>> kv;
@@ -30,8 +32,6 @@ class HashTable {
     void push_back(std::pair<K,V> itm){
       kv.push_back(itm);
     }
-//    std::vector<K> Keys;
-//    std::vector<V> Values;
   };
 
 private:
@@ -102,8 +102,6 @@ void HashTable<K,V>::enroll(K key, V val){
     return;
   }
   map[index]->push_back(std::make_pair(key,val));
-//  map[index]->Keys.push_back(key);
-//  map[index]->Values.push_back(val);
   ++(this->numberOfEntries);
 }
 
@@ -114,12 +112,6 @@ return hasher(arg);
 
 template<class K, class V>
   V* HashTable<K, V>::getFromBucket(K key, bucket* b){
-
-//  for(int i = 0; i < b->Keys.size(); i++){
-//    if(b->Keys[i] == key) return &b->Values[i];
-//    V* a = &(b->Values[i]);
-//    return a;
-//  }
     int idx = b->contains(key);
     if(idx >= 0){
       return &(b->kv[idx].second);
@@ -140,22 +132,11 @@ template<class K, class V>
 
 template<class K, class V>
   bool HashTable<K,V>::isInBucket(K key, bucket* b){
-//  for(K keymaybe : b->Keys){
-//    if(keymaybe == key) return true;
-//  }
-//  return false;
     return b->contains(key) >= 0;
 }
 
 template<class K, class V>
   void HashTable<K,V>::update(K key, V val, bucket* b){
-//  for(int i = 0; i < b->Keys.size(); i++){
-//    if(b->Keys[i] == key){
-//      b->Values[i] = val;
-//      return;
-//    }
-//  }
-    
     int idx = b->contains(key);
     if(idx >= 0){
       b->kv[idx].second = val;
@@ -171,8 +152,7 @@ template<class K, class V>
       delete map[i];
     }
   }
+//  delete[] map;   // I'm not too certain on delete actually, why not use
+                    // delete[] map; ?
 }
-
-
-
 #endif //HASHTABLE_H
