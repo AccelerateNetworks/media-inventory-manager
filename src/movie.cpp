@@ -20,14 +20,19 @@ Movie::Movie()
 Movie::Movie(string title, string year, string director, string genre)
   : Media(MediaType::MOVIE, std::move(title), std::move(year)),
     director(std::move(director)),
-    genre(std::move(genre)){
-
-  if(genre == "F"){
-    comparable.comedy.first = title, comparable.comedy.second = year;
-  } else if(genre == "D"){
-    comparable.drama.first = director, comparable.drama.second = title;
+    genre(std::move(genre)) {
+  comp.gnr = genre.at(0);
+  switch (genre.at(0)){
+    case static_cast<char>(MovieType::COMEDY):
+      comp.prim = title;
+      comp.sec = year;
+      break;
+    case static_cast<char>(MovieType::DRAMA):
+      comp.prim = director;
+      comp.sec = title;
+      break;
+    default:break;
   }
-  
 }
 
  /**
@@ -46,13 +51,22 @@ Movie::Movie(string title, string year, string director, string genre,
    
   actors.push_back(actor);
   
-  if(genre == "F"){
-    comparable.comedy.first = title, comparable.comedy.second = year;
-  } else if(genre == "D"){
-    comparable.drama.first = director, comparable.drama.second = title;
-  } else if(genre == "C"){
-    comparable.classic.first = year, comparable.classic.second = actor;
-  }
+   comp.gnr = static_cast<char>(genre.at(0));
+   switch (genre.at(0)){
+     case static_cast<char>(MovieType::COMEDY):
+       comp.prim = title;
+       comp.sec = year;
+       break;
+     case static_cast<char>(MovieType::DRAMA):
+       comp.prim = director;
+       comp.sec = title;
+       break;
+     case static_cast<char>(MovieType::CLASSIC):
+       comp.prim = year;
+       comp.sec = actor;
+       break;
+     default:break;
+   }
   
 }
 
@@ -64,7 +78,23 @@ Movie::Movie(const Movie &other)
     :Media(MediaType::MOVIE, (other.getTitle()),(other.getYear())),
      director(other.getDirector()),
      genre(other.getGenre()){
-  if(genre == "C")actors = other.getAllActors();
+  comp.gnr = static_cast<char>(genre.at(0));
+  switch (genre.at(0)){
+    case static_cast<char>(MovieType::COMEDY):
+      comp.prim = other.getTitle();
+      comp.sec = other.getYear();
+      break;
+    case static_cast<char>(MovieType::DRAMA):
+      comp.prim = director;
+      comp.sec = other.getTitle();
+      break;
+    case static_cast<char>(MovieType::CLASSIC):
+      comp.prim = other.getYear();
+      comp.sec = other.getAllActors()[0];
+      actors = other.getAllActors();
+      break;
+    default:break;
+  }
 }
 
 
@@ -106,7 +136,7 @@ vector<string> Movie::getAllActors() const {
  * @return
  */
 bool Movie::hasActor(string boyoMcBoyeeee) const {
-  for(string s : this->actors){
+  for(const string& s : this->actors){
     if(s == boyoMcBoyeeee){
       return true;
     }
@@ -144,17 +174,39 @@ void Movie::feedToOutstream(std::ostream &os) const {
   if(genre == "F" || genre == "D"){
     os << this->getYear();
   }else if( genre == "C"){
-    
     for(const auto& itm : actors)os << itm << ", ";
-    
-    string s;
-    if(getYear().length() > 4){
-      s = getYear().substr(4,2) + getYear().substr(0,4);
-    }else {
-      s = getYear();
-    }
-    os << s;
+    os << (getYear().length() > 4
+          ? getYear().substr(4, 2) + getYear().substr(0, 4)
+          : getYear());
   }
+}
+
+/** strips the existing movie of all references to past values for type-safe
+ *  assignment operation.
+ *
+ */
+void Movie::clear() {
+  // Including all of the self-cleaning state members in this list as well,
+  // but will keep them comented out. This is just for convenience should
+  // member types change down the road.
+  
+  genre = string();
+  director = string();
+  this->actors.clear();
+  comp.gnr = ' ';
+  comp.prim = string();
+  comp.sec = string();
+  
+}
+
+/**
+ *
+ * @param rhs
+ * @return
+ */
+Movie &Movie::operator=(const Movie &rhs) {
+  
+  return *this;
 }
 
 /**
@@ -171,29 +223,8 @@ void Movie::feedToOutstream(std::ostream &os) const {
  *              return false;
  */
 bool Movie::operator==(const Movie &rhs) const {
-  if(genre == rhs.getGenre()){
-    switch (genre.at(0)){
-      
-      case static_cast<const char>(MovieType::COMEDY):
-        if(comparable.comedy.first == rhs.comparable.comedy.first){
-          return comparable.comedy.second == rhs.comparable.comedy.second;
-        }
-        break;
-        
-      case static_cast<const char>(MovieType::DRAMA):
-        if(comparable.drama.first == rhs.comparable.drama.first){
-          return comparable.drama.second == rhs.comparable.drama.second;
-        }
-        break;
-        
-      case static_cast<const char>(MovieType::CLASSIC):
-        if(comparable.classic.first == rhs.comparable.classic.first){
-          return comparable.classic.second == rhs.comparable.classic.second;
-        }
-        break;
-        
-      default:break;
-    }
+  if(comp.gnr == rhs.comp.gnr){
+    if(comp.prim == rhs.comp.prim)return comp.sec == rhs.comp.sec;
   }
   return false;
 }
@@ -223,27 +254,11 @@ bool Movie::operator!=(const Movie &other) const {
  *              return false;
  */
 bool Movie::operator<(const Movie &rhs) const {
-  if(genre == rhs.getGenre()){
-    switch (genre.at(0)){
-      
-      case static_cast<const char>(MovieType::COMEDY):
-        if(comparable.comedy.first == rhs.comparable.comedy.first){
-          return comparable.comedy.second < rhs.comparable.comedy.second;
-        } else return comparable.comedy.first < rhs.comparable.comedy.first;
-        
-      case static_cast<const char>(MovieType::DRAMA):
-        if(comparable.drama.first == rhs.comparable.drama.first){
-          return comparable.drama.second < rhs.comparable.drama.second;
-        } else return comparable.drama.first < rhs.comparable.drama.first;
-        
-      case static_cast<const char>(MovieType::CLASSIC):
-        if(comparable.classic.first == rhs.comparable.classic.first){
-          return comparable.classic.second < rhs.comparable.classic.second;
-        } else return comparable.classic.first < rhs.comparable.classic.first;
-        
-      default:return false;
-    }
-  } else return genre < rhs.getGenre();
+  if(comp.gnr == rhs.comp.gnr){
+    if(comp.prim == rhs.comp.prim)return comp.sec < rhs.comp.sec;
+    else return comp.prim < rhs.comp.prim;
+  }
+  else return comp.gnr < rhs.comp.gnr;
   
 }
 
@@ -273,4 +288,7 @@ bool Movie::operator<=(const Movie &rhs) const {
 bool Movie::operator>=(const Movie &rhs) const {
   return !(*this < rhs);
 }
+
+
+
 

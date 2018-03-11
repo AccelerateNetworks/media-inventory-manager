@@ -38,6 +38,8 @@ class Inventory {
 
 
   ~Inventory();
+  
+  Movie getItem(string title, string year);
 };
 
 #endif // INV_H

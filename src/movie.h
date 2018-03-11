@@ -1,8 +1,6 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 
-#include "media.h"
-
 #include <iostream>
 #include <string>
 #include <utility>
@@ -13,6 +11,10 @@ using std::string;
 using std::vector;
 using std::ostream;
 
+#include "media.h"
+
+
+
 enum class MovieType : char { COMEDY = 'F', DRAMA = 'D', CLASSIC = 'C'};
 
 class Movie : public Media {
@@ -20,7 +22,13 @@ class Movie : public Media {
   string director;
   string genre;
   vector<string> actors;
-
+  
+  
+  // for safety, I'm adding a functino for clearing the existing contents of a
+  // Movie object to make it safe for the assignment operator.
+  
+  void clear();
+  
  public:
   
   Movie();
@@ -85,6 +93,12 @@ class Movie : public Media {
    */
   void feedToOutstream(std::ostream &os) const override;
   
+
+  
+  // implementing assignment operator overload:
+  
+  Movie&operator=(const Movie& rhs);
+  
   // equality operator overloads:
   
   /**
@@ -135,7 +149,7 @@ class Movie : public Media {
    *
    * @return
    */
-  int hash();
+  int hash() override;
   
   /**
    *
@@ -146,17 +160,16 @@ class Movie : public Media {
   /**
    *
    */
-  union compare_movies{
-    char c{}; // the low cost means for intializing the union
-    
-    std::pair<string, string> comedy;
-    std::pair<string,string> drama;
-    std::pair<string, string> classic;
-    
-    ~compare_movies(){};
-    
-    compare_movies():c(' '){}
-  }comparable;
+   struct Comparable{
+     char gnr;
+     string prim;
+     string sec;
+     Comparable():gnr(' '),prim(""), sec(""){};
+     Comparable(const char& gnr, const string& pr, const string& sc) // NOLINT
+         :gnr(gnr), prim(pr), sec(sc){}
+     
+     ~Comparable() = default;
+   }comp;
 
   
 };

@@ -4,12 +4,11 @@ void Inventory::addItem(Movie* arg){
   this->contents->enroll(arg->getTitle() + arg->getYear(), *arg);
 }
 
+
 Movie Inventory::getItem(string title, string year){
   this->contents->get(title+year);
 }
-void Inventory::addItem(Movie* arg){
-  this->contents->enroll(arg->getTitle() + arg->getYear(), *arg);
-}
+
 
 Movie Inventory::getItem(string title, string year, string director, string actor){
   this->contents->get(title+year+director+actor);
