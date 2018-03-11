@@ -62,7 +62,7 @@ Movie::Movie(string title, string year, string director, string genre,
      genre(std::move(genre)),
      id(GETNEXTID()) {
    
-  actors.push_back(actor);
+  actors = actor;
   
    comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
    
@@ -88,7 +88,7 @@ Movie::Movie(string title, string year, string director, string genre,
  *
  * @param other
  */
-Movie::Movie(const Movie &other)
+Movie::Movie( Movie &other)
     :Media(MediaType::MOVIE, (other.getTitle()),(other.getYear())),
      director(other.getDirector()),
      genre(other.getGenre()),
@@ -108,7 +108,7 @@ Movie::Movie(const Movie &other)
     case static_cast<char>(MovieType::CLASSIC):
       comp.prim = other.getYear();
       comp.sec = other.getAllActors()[0];
-      actors = other.getAllActors();
+      actor = other.actor;
       break;
     default:break;
   }
@@ -221,7 +221,7 @@ void Movie::clear() {
  * @param rhs
  * @return
  */
-Movie &Movie::operator=(const Movie &rhs) {
+Movie &Movie::operator=( Movie &rhs) {
   if(this == &rhs || *this == rhs)return *this;
   this->clear();
   setType(rhs.getType());
@@ -231,7 +231,7 @@ Movie &Movie::operator=(const Movie &rhs) {
   genre = rhs.getGenre();
   actors = vector<string>(rhs.actors);
   comp = Comparable(rhs.comp.gnr, rhs.comp.prim, rhs.comp.sec );
-  id = rhs.getId():
+  id = rhs.getId();
   return *this;
 }
 
@@ -248,7 +248,7 @@ Movie &Movie::operator=(const Movie &rhs) {
  *              }
  *              return false;
  */
-bool Movie::operator==(const Movie &rhs) const {
+bool Movie::operator==(Movie &rhs) const {
   return this->id == rhs.getId();
 }
 
@@ -257,7 +257,7 @@ bool Movie::operator==(const Movie &rhs) const {
  * @param other
  * @return
  */
-bool Movie::operator!=(const Movie &other) const {
+bool Movie::operator!=(Movie &other) const {
   return !(*this == other);
 }
 

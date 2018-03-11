@@ -62,7 +62,7 @@ class Movie : public Media {
    *
    * @param other
    */
-  Movie(const Movie& other);
+  Movie(Movie& other);
   
   /**
    *
@@ -106,7 +106,7 @@ class Movie : public Media {
    * @param rhs
    * @return
    */
-  Movie& operator=(const Movie& rhs);
+  Movie& operator=(Movie& rhs);
   
   // equality operator overloads:
   
@@ -115,14 +115,14 @@ class Movie : public Media {
    * @param rhs
    * @return
    */
-  bool operator==(const Movie& rhs) const;
+  bool operator==(Movie& rhs) const;
   
   /**
    *
    * @param other
    * @return
    */
-  bool operator!=(const Movie& other) const;
+  bool operator!=(Movie& other) const;
   
   // relational operator overaloads:
   
