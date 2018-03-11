@@ -17,7 +17,7 @@ public:
       :type(type), title(std::move(title)), year(std::move(year)){
   }
   
-  virtual string hash(){
+  virtual int hash(){
   
   };
   

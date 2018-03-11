@@ -12,8 +12,8 @@ int Client::GET_NEXT_ID(){
   return Client::NEXT_ID++;
 }
 
-string Client::hash(){
-  return std::to_string( this->firstName[0] + this->lastName[0]  );
+int Client::hash(){
+  return (int) this->firstName[0];
 }
 
 int Client::getID() const {

@@ -32,11 +32,11 @@ void hashTableConstructorTest(){
 void hashTableEnrollTest(){
   try{
     testTable.enroll(2, 4);
-    if(testTable.get(2)!=4){
+    if(*testTable.get(2)!=4){
       throw "Failed enroll test at first get()";
     }
     testTable.enroll(2, 5);
-    if(testTable.get(2)!=5){
+    if(*testTable.get(2)!=5){
       throw "Failed enroll test at second get()";
     }
     if(testTable.getNumberOfEntries() != 1)

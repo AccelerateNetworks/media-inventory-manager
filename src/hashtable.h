@@ -15,7 +15,7 @@ class HashTable {
 
 private:
   // pointer to hash function
-  K (*hasher)(K);
+  int (*hasher)(K);
 
   // finds correct val in a bucket
   V getFromBucket(K, bucket*);
@@ -27,12 +27,12 @@ private:
   // number of entries
   int                 numberOfEntries = 0;
   // underlying implementation
-  std::vector<bucket*> map;
+  bucket* map[96];
 
 public:
   // constructor takes a pointer to a
   // hashing function
-  HashTable(K(*hashFunc)(K));
+  HashTable(int(*hashFunc)(K));
   ~HashTable();
 
   // enroll emplaces a key value pair
@@ -41,7 +41,7 @@ public:
   void enroll(K, V);
 
   // retrieves a value from a key
-  V get(K);
+  V* get(K);
 
   // returns current number of entries
   int getNumberOfEntries();
@@ -51,11 +51,11 @@ public:
   retrieveAllValues(HashTable<K, V>, bool(*sortComparator)(V, V));
 
   // helper function for unit testing purposes
-  K getHash(K);
+  int getHash(K);
 };
 
 template <class K, class V>
-HashTable<K, V>::HashTable(K(*hashFunction)(K)){
+  HashTable<K, V>::HashTable(int(*hashFunction)(K)){
   this->hasher = hashFunction;
   this->numberOfEntries = 0;
 }
@@ -67,28 +67,26 @@ template <class K, class V>
 
 template<class K, class V>
 void HashTable<K,V>::enroll(K key, V val){
-  K hashval = hasher(key);
 
-  for(bucket* b : this->map){
-    if(b->hash == hashval){
-      if(isInBucket(key, b)){ this->update(key, val, b); return; }
-      b->Keys.push_back(key);
-      b->Values.push_back(val);
-      ++this->numberOfEntries;
-      return;
-    }
+  int index = hasher(key);
+
+  if(map[index] == nullptr){
+    map[index] = new bucket();
   }
 
-  bucket* b = new bucket();
-  b->hash = hashval;
-  b->Values.push_back(val);
-  b->Keys.push_back(key);
+  if(this->isInBucket(key,map[index])){
+    this->update(key, val, map[index]);
+    return;
+  }
+
+  map[index]->Keys.push_back(key);
+  map[index]->Values.push_back(val);
   ++this->numberOfEntries;
-  this->map.push_back(b);
+  return;
 }
 
 template<class K, class V>
-K HashTable<K,V>::getHash(K arg){
+int HashTable<K,V>::getHash(K arg){
 return hasher(arg);
 }
 
@@ -103,15 +101,15 @@ template<class K, class V>
 }
 
 template<class K, class V>
-  V HashTable<K,V>::get(K key){
-  for(bucket* b : this->map){
-    if(this->hasher(key) == b->hash){
-      return getFromBucket(key, b);
-    }
-  }
+  V* HashTable<K,V>::get(K key){
 
-  // maybe throw something?
-  return {};
+  int index = hasher(key);
+  if(map[index] == nullptr) return nullptr;
+  if(!isInBucket(key, map[index])) return nullptr;
+
+  V* a;
+  *a = getFromBucket(key, map[index]);
+  return a;
 }
 
 template<class K, class V>
@@ -137,8 +135,10 @@ template<class K, class V>
 
 template<class K, class V>
   HashTable<K,V>::~HashTable(){
-  for(bucket* b : this->map){
-    delete b;
+  for(int i = 0; i <= 95; ++i){
+    if(map[i] != nullptr){
+      delete map[i];
+    }
   }
 }
 
