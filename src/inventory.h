@@ -12,6 +12,11 @@ using std::vector;
 #include "movie.h"
 #include "transaction.h"
 
+/**
+ *
+ * @param arg the string representation of the Media object's title
+ * @return
+ */
 int hash(const string& arg){
   return (int) arg[0];
 }
@@ -25,7 +30,7 @@ class Inventory {
   HashTable<Client, vector<Transaction>*>* transactionLog
                  {new HashTable<Client, vector<Transaction>*>(hashc)};
   vector<Client> clientelle{};
-  Client getClient(string name);
+  Client getClient(const string &name);
 
  public:
   
@@ -34,17 +39,70 @@ class Inventory {
   
   
   void addItem(Movie*);
-  Movie getItem(string, string, string, string);
-  bool returnItem(string, string, string, string);
-  bool newTransaction(string, string, string, string, string);
-  void addClient(Client);
+  
+  /**
+   *
+   * @param title
+   * @param year
+   * @param director
+   * @param actor
+   * @return
+   */
+  Movie getItem(const string &title, const string &year, const string &director,
+                const string &actor);
+  
+  /**
+   *
+   * @param title
+   * @param year
+   * @param director
+   * @param actor
+   * @return
+   */
+  bool returnItem(const string &title, const string &year,
+                  const string &director, const string &actor);
+  
+  /**
+   *
+   * @param customer
+   * @param title
+   * @param year
+   * @param director
+   * @param actor
+   * @return
+   */
+  bool newTransaction(const string &customer, const string &title,
+                      const string &year, const string &director,
+                      const string &actor);
+  
+  /**
+   *
+   * @param c
+   */
+  void addClient(Client &c);
+  
+  /**
+   *
+   */
   void printAllMedia();
-  bool isMovieCheckedOut(Movie);
+
+/**
+ *
+ * @param arg the movie object reference we are going to look for
+ * @return
+ */
+  bool isMovieCheckedOut(Movie arg);
 
 
   ~Inventory();
   
-  Movie getItem(string title, string year);
+  /**
+   *
+   * @param title
+   * @param year
+   * @return
+   */
+  Movie getItem(const string &title, const string &year);
 };
 
 #endif // INV_H
