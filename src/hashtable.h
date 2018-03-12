@@ -104,9 +104,9 @@ template <class K, class V>
   HashTable<K, V>::HashTable(int(*hashFunction)(const K &)){
   this->hasher = hashFunction;
   this->numberOfEntries = 0;
-  for(int i = 0; i < map_end; ++i){
-    map[i]->kv = std::vector<std::pair<K,V>>(20);
-  }
+//  for(int i = 0; i < map_end; ++i){
+//    map[i]->kv = std::vector<std::pair<K,V>>(20);
+//  }
 }
 
 /**

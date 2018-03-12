@@ -25,7 +25,8 @@ void hashTableTest(){
     cout << "[+] Passed constructor test" << endl;
     hashTableEnrollTest();
     cout << "[+] Passed enroll test" << endl;
-    hastableSortingTest();
+//    hastableSortingTest();
+//    cout << "[+] Passed sorting test" << endl;
   } catch (const char* s){
     cout << "[-] " << s << endl;
   }

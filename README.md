@@ -116,7 +116,82 @@ Overall Requirements:
 
 
 
+```sh
 
+/media-inventory-managea_r$ make test
+In file included from tests/hashtabletest.h:8:0,
+                 from tests/alltests.cpp:11:
+tests/../src/hashtable.h: In instantiation of ‘std::vector<V> HashTable<K, V>::retrieveAllValues(K, V) [with K = int; V = int]’:
+tests/hashtabletest.h:46:56:   required from here
+tests/../src/hashtable.h:333:55: warning: unused parameter ‘kType’ [-Wunused-parameter]
+   std::vector<V> HashTable<K, V>::retrieveAllValues(K kType, V vType) {
+                                                       ^
+tests/../src/hashtable.h:333:64: warning: unused parameter ‘vType’ [-Wunused-parameter]
+   std::vector<V> HashTable<K, V>::retrieveAllValues(K kType, V vType) {
+                                                                ^
+tests/../src/hashtable.h: In instantiation of ‘HashTable<K, V>::allValsHelper(std::vector<V>&)::<lambda(const int&, const int&)> [with K = int; V = int]’:
+tests/../src/hashtable.h:283:35:   required from ‘struct HashTable<K, V>::allValsHelper(std::vector<V>&) [with K = int; V = int]::<lambda(const int&, const int&)>’
+tests/../src/hashtable.h:294:5:   required from ‘void HashTable<K, V>::allValsHelper(std::vector<V>&) [with K = int; V = int]’
+tests/../src/hashtable.h:341:18:   required from ‘std::vector<V> HashTable<K, V>::retrieveAllValues(K, V) [with K = int; V = int]’
+tests/hashtabletest.h:46:56:   required from here
+tests/../src/hashtable.h:285:52: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       for (unsigned int i = (unsigned int)first; i < last; ++i){
+                                                    ^
+tests/../src/hashtable.h:287:39: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         for (unsigned int  j = i+1; j <= last; ++j ) {
+                                       ^
+In file included from src/movie.cpp:1:0:
+src/movie.h: In copy constructor ‘Movie::Movie(const Movie&)’:
+src/movie.h:26:10: warning: ‘Movie::genre’ will be initialized after [-Wreorder]
+   string genre;
+          ^
+src/movie.h:23:7: warning:   ‘int Movie::id’ [-Wreorder]
+   int id;
+       ^
+src/movie.cpp:99:1: warning:   when initialized here [-Wreorder]
+ Movie::Movie(const Movie &other)
+ ^
+src/inventory.cpp: In member function ‘void Inventory::getFreeCopy(const string&, const string&, const string&, const string&, Movie*)’:
+src/inventory.cpp:43:83: warning: parameter ‘ptr’ set but not used [-Wunused-but-set-parameter]
+                               const string &director, const string &actor, Movie* ptr){
+                                                                                   ^
+src/inventory.cpp: At global scope:
+src/inventory.cpp:161:32: warning: unused parameter ‘id’ [-Wunused-parameter]
+ bool Inventory::returnItem(int id) {
+                                ^
+Sun Mar 11 21:03:26 2018
+
+[+] Running all tests -
+[+]              hashTable testing START
+[+] Testing HashTable
+[+] Passed constructor test
+[+] Passed enroll test
+[+]              hashTable testing END
+
+[+]              class Movie testing START
+[+] performing test :                     test_each_genre_constructor
+[+] passed          :                     test_each_genre_constructor
+[+]              class Movie testing END
+
+[+]              class Transaction testing START
+[+] performing test :                    test_transaction_constructor
+[+] passed          :                    test_transaction_constructor
+[+] performing test :                 test_transaction_isDue_function
+[+] passed          :                 test_transaction_isDue_function
+[+] performing test :                         test_unixTimeCheckedOut
+[+] passed          :                         test_unixTimeCheckedOut
+[+]              class Transaction testing END
+
+[+]              class Client testing START
+[+] Passed Client ID Tests
+[+] Passed Client name tests
+[+] Passed CLient sort tests
+[+]              class Client testing END
+[+]              class Inventory testing START
+[+] Beginning Inventory Tests
+[-] Failed: failed first checkout EnrollTest
+[+]              class Inventory testing END
+```
 
 
 
