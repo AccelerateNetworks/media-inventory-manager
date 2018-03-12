@@ -57,7 +57,7 @@ private:
    * @param v
    * @return
    */
-  std::vector<V> allValsHelper(std::vector<V> v);
+  void allValsHelper(std::vector<V> &v);
 public:
   // constructor takes a pointer to a
   // hashing function
@@ -252,12 +252,51 @@ template<class K, class V>
 }
 
 template<class K, class V>
-  std::vector<V> HashTable<K,V>::allValsHelper(std::vector<V> v){
-    int low = 0, high = (int)v.size(), mid = high/2;
+  void HashTable<K,V>::allValsHelper(std::vector<V> &v){
 
-    auto pivLambda = [&v](int low, int mid, int hi){
+    int insert_if_bellow = 10;
 
+    auto swap = [&v](const int &low, const int &hi) -> void {
+      V tmp = v.at(low);
+      v.at(low) = v.at(hi);
+      v.at(hi) = tmp;
     };
+
+    auto insertionLambda = [swap,&v](const int &first,
+                                     const int &last)-> void {
+      for (unsigned int i = first; i < last; ++i){
+        unsigned int  smallest = i;
+        for (unsigned int  j = i+1; j <= last; ++j ) {
+          smallest = (v[j] >= 0 && v[j] < v[smallest])? j : smallest ;
+        }
+        if(smallest > i) {
+          swap(smallest,i);
+        }
+      }// end of for i
+    };// end of combineArrays(v,first,last) function
+
+    auto pivSorterLambda = [&](int l, int mid, int r){
+      if (r - l + 1 < insert_if_bellow)
+      {
+        insertionLambda( l, r );
+      }
+      else
+      {
+        while(l < r){
+          if(l != mid && v.at(l) <= v.at(mid))++l;
+          else if(v.at(r) >= v.at(mid))--r;
+          else {
+            if(l == mid)mid = r;
+            else if( r == mid)mid = l;
+            swap(l,r);
+          }
+        }
+        if(l != mid - 1)pivSorterLambda(l,(mid - 1 + l)/2 , mid - 1);
+        if(r != mid + 1)pivSorterLambda(mid + 1, (mid+1+r), r);
+      }  // end if
+    };
+
+    pivSorterLambda(0,(int)(v.size())/2,(int)v.size());
 
   }
 
@@ -270,8 +309,9 @@ template<class K, class V>
       auto iterb = map[i]->kv.end();
       while(iterf != iterb ) ret.push_back(iterf->second);
     }
+    allValsHelper(ret);
 
-    return std::vector<V>();
+    return ret;
   }
 
 #endif //HASHTABLE_H
