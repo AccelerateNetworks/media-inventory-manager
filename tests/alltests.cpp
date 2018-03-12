@@ -50,8 +50,8 @@ int main() {
   runClientTests();
   cout << "[+]\t\t class Client testing END" << endl;
 
-  cout << "[+] \t\t class Inventory testing START" << endl;
+  cout << "[+]\t\t class Inventory testing START" << endl;
   inventoryTests();
-  cout << "[+] \t\t class Inventory testing END" << endl;
+  cout << "[+]\t\t class Inventory testing END" << endl;
   return 0;
 }
