@@ -63,7 +63,6 @@ public:
   // does not already exist
   void enroll(K, V);
   
-  
   // retrieves a value from a key
   V* get(K);
 
@@ -168,6 +167,9 @@ template<class K, class V>
   V* HashTable<K,V>::get(K key){
 
   int index = hasher(key);
+
+  if(index < 0 || index >= 96) throw "hash index out of bounds";
+
   if(map[index] == nullptr) return nullptr;
   if(!isInBucket(key, map[index])) return nullptr;
 
@@ -218,7 +220,7 @@ template<class K, class V>
  * @param b
  */
 template<class K, class V>
-  void HashTable<K,V>::update(int idx,K key, V val, bucket* b){
+  void HashTable<K,V>::update(int idx, K key, V val, bucket* b){
     if(idx >= 0){
       b->kv[idx].second = val;
     }
@@ -238,7 +240,7 @@ template<class K, class V>
       delete map[i];
     }
   }
-//  delete[] map;   // I'm not too certain on delete actually, why not use
+  delete[] map;   // I'm not too certain on delete actually, why not use
                     // delete[] map; ?
 }
 #endif //HASHTABLE_H

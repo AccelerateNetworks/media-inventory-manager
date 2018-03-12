@@ -2,6 +2,7 @@
 #define WHOOT
 
 #include "inventory.h"
+#include <iostream>
 
 /** Add an item to the contents hashmap
  *
@@ -10,10 +11,20 @@
  */
 void Inventory::addItem(Movie arg){
   vector<Movie>** v = this->contents->get(arg.getTitle() +
-                                         arg.getYear() +
-                                         arg.getDirector() +
-                                         arg.getActor());
-  (*v)->push_back(arg);
+                                          arg.getYear() +
+                                          arg.getDirector() +
+                                          arg.getActor());
+  if(v == nullptr){
+
+    vector<Movie>* n = new vector<Movie>();
+    n->push_back(arg);
+    this->contents->enroll(arg.getTitle() +
+                           arg.getYear() +
+                           arg.getDirector() +
+                           arg.getActor(), n);
+  } else {
+    (*v)->push_back(arg);
+  }
 }
 
 /**
@@ -24,14 +35,28 @@ void Inventory::addItem(Movie arg){
  * @param actor
  * @return
  */
-Movie& Inventory::getFreeCopy(const string &title, const string &year,
-                         const string &director, const string &actor){
-  for(Movie& m : **this->contents->get(title+year+director+actor)){ // NOLINT
-    if(!isMovieCheckedOut(m)){
-      return m;
-    }
+void Inventory::getFreeCopy(const string &title, const string &year,
+                              const string &director, const string &actor, Movie* ptr){
+  if(this->contents->get(title+year+director+actor) == nullptr){
+    ptr = nullptr;
+    return;
+  }
+  // for(Movie& m : **this->contents->get(title+year+director+actor)){ // NOLINT
+  //  if(!isMovieCheckedOut(m)){
+  //    ptr = &m;
+  //  }
+  // }
+  vector<Movie>* v = *this->contents->get(title+year+director+actor);
+  if(v == nullptr) {
+    std::cout << "LINE 49 ERROR WOW" << std::endl;
+    ptr = nullptr;
   }
 
+  for(Movie m : *v){
+    if(!isMovieCheckedOut(m)){
+      ptr = &m;
+    }
+  }
 }
 
 /**
@@ -47,8 +72,8 @@ bool Inventory::newTransaction(const string &customer, const string &title,
                                const string &year, const string &director,
                                const string &actor){
 
-  Movie* m{nullptr};
-  *m = getFreeCopy(title, year, director, actor);
+  Movie* m;
+  getFreeCopy(title, year, director, actor, m);
   if(m == nullptr) return false;
 
   Transaction* t = new Transaction();

@@ -22,11 +22,11 @@ using std::vector;
 class Inventory {
 
   static int hashs(const string& arg){
-    return (int) arg[0];
+    return ((int) arg[0] - 32);
   }
 
   static int hashc(const Client& c){
-    return (int) c.getName()[0];
+    return ((int) c.getName()[0] - 32);
   }
 
   HashTable<string, vector<Movie>*>* contents
@@ -51,8 +51,10 @@ class Inventory {
    * @param actor
    * @return
    */
-  Movie& getFreeCopy(const string &title, const string &year,
-                    const string &director, const string &actor);
+  void getFreeCopy(const string &title, const string &year,
+                     const string &director,
+                     const string &actor,
+                     Movie* ptr);
 
   /**
    *

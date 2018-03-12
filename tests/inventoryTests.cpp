@@ -2,8 +2,9 @@
 #define INVTEST
 
 #include "../src/inventory.h"
-#include "../src/movie.h"
-#include "../src/client.h"
+
+class Client;
+class Movie;
 
 #include <iostream>
 using std::cout;
@@ -28,6 +29,8 @@ void inventoryEnrollTest(){
 
   b = testInv.newTransaction("Rita TestyBoy", "1", "1", "1", "1");
   if(!b) throw "failed first checkout EnrollTest";
+  if(!testInv.isMovieCheckedOut(testMov) && !testInv.isMovieCheckedOut(testMov2))
+    throw "Movies arent actualy being checked out!";
 
   b = testInv.newTransaction("Rita TestyBoy", "1", "1", "1", "1");
   if(!b) throw "Failed second enrollment EnrollTest";
@@ -36,7 +39,7 @@ void inventoryEnrollTest(){
   if(b) throw "checked out too many testmovie! enrolltest";
 
   testInv.newTransaction("Rita TestyBoy", "3", "3", "3", "3");
-  b = testInv.returnItem(testMov.getId());
+  b = testInv.returnItem(testMov);
   if(!b) throw "returning movie returned false!";
   b = testInv.newTransaction("Rita TestyBoy", "3", "3", "3", "3");
   if(!b) throw "Movie not returned right, cannot be checked back out!";

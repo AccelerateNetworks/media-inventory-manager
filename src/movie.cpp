@@ -9,16 +9,17 @@ int Movie::NEXT_ID = 0;
 Movie::Movie()
     :Media(MediaType::MOVIE, "", "201800"),
      director(""),
-     genre(""),
-     id(GETNEXTID())
+     genre("")
 {
   comp.gnr = (char)MovieType::DEFAULT;
   comp.prim = string();
   comp.sec = string();
+  id = GETNEXTID();
 }
 
 int Movie::GETNEXTID(){
-  return ++NEXT_ID;
+  int i = NEXT_ID++;
+  return i;
 }
 
 int Movie::getId(){
@@ -35,8 +36,9 @@ int Movie::getId(){
 Movie::Movie(string title, string year, string director, string genre)
   : Media(MediaType::MOVIE, std::move(title), std::move(year)),
     director(std::move(director)),
-    genre(std::move(genre)),
-    id(GETNEXTID()){
+    genre(std::move(genre)){
+
+  id = GETNEXTID();
 
   comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
 
@@ -65,9 +67,9 @@ Movie::Movie(string title, string year, string director, string genre,
              string actor)
     :Media(MediaType::MOVIE, std::move(title), std::move(year)),
      director(std::move(director)),
-     genre(std::move(genre)),
-     id(GETNEXTID()) {
-   
+     genre(std::move(genre)) {
+
+  id = GETNEXTID();
   actor = actor;
   
    comp.gnr = static_cast<char>((genre.length() > 0)? genre.at(0): ' ');
