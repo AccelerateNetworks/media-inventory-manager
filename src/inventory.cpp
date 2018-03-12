@@ -75,15 +75,17 @@ bool Inventory::newTransaction(const string &customer, const string &title,
                                const string &year, const string &director,
                                const string &actor){
 
-  Movie* m;
+  Movie* m{nullptr};
   getFreeCopy(title, year, director, actor, m);
   if(m == nullptr) return false;
 
   Transaction* t = new Transaction();
+  Client* cc{nullptr};
+  *cc = getClient(customer);
   t->addMovie(m);
-  vector<Transaction>* b = *(this->transactionLog->get(getClient(customer)));
+  vector<Transaction>* b = *(this->transactionLog->get(*cc));
   b->push_back(*t);
-  this->transactionLog->enroll(getClient(customer), b);
+  this->transactionLog->enroll(*cc, b);
   return true;
 }
 

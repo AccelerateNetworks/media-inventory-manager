@@ -16,6 +16,7 @@ HashTable<int,int> testTable(&intHasher); // NOLINT
 
 void hashTableEnrollTest();
 void hashTableConstructorTest();
+void hastableSortingTest();
 
 void hashTableTest(){
   cout << "[+] Testing HashTable" << endl;
@@ -24,32 +25,31 @@ void hashTableTest(){
     cout << "[+] Passed constructor test" << endl;
     hashTableEnrollTest();
     cout << "[+] Passed enroll test" << endl;
+    hastableSortingTest();
   } catch (const char* s){
     cout << "[-] " << s << endl;
   }
 
 }
 
-void hastablesortingTest(){
+void hastableSortingTest(){
   int a[20] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
   HashTable<int,int> sortableTable(intHasher);
-  for(int i = 0; i < 20;++i){
+  for(int i = 0; i < 10;++i){
     sortableTable.enroll(i,i);
   }
+
   try{
-    sortableTable.retrieveAllValues();
-    if(a == nullptr){
-      throw "Failed enroll test at first get(): returned nullptr";
+    bool testPass = true;
+    int idx = 0;
+    vector<int> v = sortableTable.retrieveAllValues(1,1);
+    for(int i = 0; i < 10 && testPass; ++i){
+      if(a[i] != v[i])testPass = false, idx = i;
     }
-    if(*a != 4) throw "failed enroll test at first get(): wrong val";
-
-    testTable.enroll(2, 5);
-    if(*testTable.get(2)!=5){
-      throw "Failed enroll test at second get()";
+    if(!testPass){
+      string ss = "Failed sort test idx = " + idx;
+      throw ss;
     }
-    if(testTable.getNumberOfEntries() != 1)
-      throw "Failed enroll test, number of entries not updated on enroll";
-
   } catch (const char* s){
     throw s;
   }

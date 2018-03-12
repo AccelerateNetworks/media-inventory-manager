@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <functional>
 
 template<class K, class V>
 class HashTable {
@@ -11,6 +12,8 @@ class HashTable {
   
   // nested struct to keep everything nice and civil
   struct bucket {
+    bucket() = default;
+
     std::vector<std::pair<K,V>> kv;
     /** determines if the given key, target, is in this bucket
      * If hash properly distributes items across table, this should
@@ -20,8 +23,8 @@ class HashTable {
      */
     int contains(const K& target)const {
       int idx = 0;
-      while(idx < (int)kv.size() && kv[idx].first != target)++idx;
-      return (idx < (int)kv.size() && kv[idx].first == target)? idx : -1;
+      while(idx < (int)kv.size() && kv.at(idx).first != target)++idx;
+      return (idx < (int)kv.size() && kv.at(idx).first == target)? idx : -1;
     }
     
     /** following the STL general nomenclature for pushing items back into
@@ -77,7 +80,14 @@ public:
 
 
   // return all movies sorted like they need to be
-  std::vector<V> retrieveAllValues(HashTable<K, V>);
+  /**
+   *
+   * @param kType placeholder for type inference
+   * @param vType placeholder for type inference
+   *
+   * @return a vector of V values.
+   */
+  std::vector<V> retrieveAllValues(K kType, V vType);
 
   // helper function for unit testing purposes
   int getHash(K);
@@ -92,9 +102,11 @@ public:
  */
 template <class K, class V>
   HashTable<K, V>::HashTable(int(*hashFunction)(const K &)){
-  std::cout << "map_end = " << map_end << std::endl;
   this->hasher = hashFunction;
   this->numberOfEntries = 0;
+  for(int i = 0; i < map_end; ++i){
+    map[i]->kv = std::vector<std::pair<K,V>>(20);
+  }
 }
 
 /**
@@ -251,6 +263,12 @@ template<class K, class V>
 //                    // delete[] map; ?
 }
 
+/**
+ *
+ * @tparam K
+ * @tparam V
+ * @param v
+ */
 template<class K, class V>
   void HashTable<K,V>::allValsHelper(std::vector<V> &v){
 
@@ -264,7 +282,7 @@ template<class K, class V>
 
     auto insertionLambda = [swap,&v](const int &first,
                                      const int &last)-> void {
-      for (unsigned int i = first; i < last; ++i){
+      for (unsigned int i = (unsigned int)first; i < last; ++i){
         unsigned int  smallest = i;
         for (unsigned int  j = i+1; j <= last; ++j ) {
           smallest = (v[j] >= 0 && v[j] < v[smallest])? j : smallest ;
@@ -274,8 +292,8 @@ template<class K, class V>
         }
       }// end of for i
     };// end of combineArrays(v,first,last) function
-
-    auto pivSorterLambda = [&](int l, int mid, int r){
+    std::function<void(int, int, int)> pivSorterLambda;
+    pivSorterLambda = [&](int l, int mid, int r){
       if (r - l + 1 < insert_if_bellow)
       {
         insertionLambda( l, r );
@@ -286,8 +304,10 @@ template<class K, class V>
           if(l != mid && v.at(l) <= v.at(mid))++l;
           else if(v.at(r) >= v.at(mid))--r;
           else {
-            if(l == mid)mid = r;
-            else if( r == mid)mid = l;
+            if(l == r ){
+              r = mid;
+              mid = l;
+            }
             swap(l,r);
           }
         }
@@ -300,10 +320,19 @@ template<class K, class V>
 
   }
 
+/**
+ *
+ * @tparam K key type
+ * @tparam V value type
+ * @param kType placeholder for type inference
+ * @param vType placeholder for type inference
+
+ * @return a vector of V values.
+ */
 template<class K, class V>
-  std::vector<V> HashTable<K, V>::retrieveAllValues(HashTable<K, V>) {
+  std::vector<V> HashTable<K, V>::retrieveAllValues(K kType, V vType) {
     // this assumes that we are being given a movie object for v;
-    std::vector<V> ret(numberOfEntries);
+    std::vector<V> ret(static_cast<unsigned long long int>(numberOfEntries));
     for(int i = 0; i < map_end; ++i){
       auto iterf = map[i]->kv.begin();
       auto iterb = map[i]->kv.end();
