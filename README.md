@@ -1,4 +1,4 @@
-CSS 343 -- Assignment 4: Movie Store Inventory Management Tool
+Mediainv
 ===
 
 ---
