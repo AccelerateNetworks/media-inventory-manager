@@ -18,7 +18,7 @@ $(program_NAME): $(program_OBJS)
 	$(LINK.cc) $(program_OBJS) -o $(program_NAME)
 
 test:
-	@- g++ -std=c++14 -g -Wall -Wextra -o test tests/alltests.cpp src/client.cpp src/movie.cpp src/hashtable.cpp src/inventory.cpp src/transaction.cpp; ./test
+	@- g++ -std=c++14 -g -Wall -Wextra -o test tests/alltests.cpp src/client.cpp src/movie.cpp src/hashtable.cpp src/inventory.cpp src/transaction.cpp; valgrind --leak-check=full --show-leak-kinds=all ./test
 
 install:
 	@- install -m557 mediainv /usr/bin
