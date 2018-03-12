@@ -32,10 +32,12 @@ void hashTableTest(){
 
 void hastablesortingTest(){
   int a[20] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-  HashTable<int,int> sortableTable(&int)
+  HashTable<int,int> sortableTable(intHasher);
+  for(int i = 0; i < 20;++i){
+    sortableTable.enroll(i,i);
+  }
   try{
-    testTable.enroll(2, 4);
-    a = testTable.get(2);
+    sortableTable.retrieveAllValues();
     if(a == nullptr){
       throw "Failed enroll test at first get(): returned nullptr";
     }
