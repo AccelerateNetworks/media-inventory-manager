@@ -41,19 +41,18 @@ void Inventory::addItem(Movie* arg){
  */
 void Inventory::getFreeCopy(const string &title, const string &year,
                               const string &director, const string &actor, Movie* ptr){
+
+  ptr = nullptr;
+
   if(this->contents->get(title+year+director+actor) == nullptr){
     ptr = nullptr;
     return;
   }
-  // for(Movie& m : **this->contents->get(title+year+director+actor)){ // NOLINT
-  //  if(!isMovieCheckedOut(m)){
-  //    ptr = &m;
-  //  }
-  // }
   vector<Movie>* v = *this->contents->get(title+year+director+actor);
   if(v == nullptr) {
     std::cout << "LINE 49 ERROR WOW" << std::endl;
     ptr = nullptr;
+    
   }
 
   for(Movie m : *v){
@@ -84,7 +83,7 @@ bool Inventory::newTransaction(const string &customer, const string &title,
   t->addMovie(m);
   vector<Transaction>* b = *(this->transactionLog->get(getClient(customer)));
   b->push_back(*t);
-  //update!
+  this->transactionLog->enroll(getClient(customer), b);
   return true;
 }
 

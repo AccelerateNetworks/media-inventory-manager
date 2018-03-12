@@ -14,10 +14,17 @@ using std::endl;
 using std::string;
 using std::ifstream;
 
-Inventory& command_input_file( Inventory& i);
+Inventory& command_input_file( Inventory& i );
+Inventory& client_input_file( Inventory& i );
+Inventory& movie_input_file( Inventory& i );
+
 
 int main () {
-  std::cout << "this is where program output would be" << std::endl;
+
+  Inventory i;
+
+  command_input_file(movie_input_file(client_input_file(i))).printAllMedia();
+
   return 0;
 }
 
