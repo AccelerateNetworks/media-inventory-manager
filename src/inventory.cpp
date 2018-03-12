@@ -126,4 +126,9 @@ bool Inventory::returnItem(Movie m){
   }
   return false;
 }
+
+bool Inventory::returnItem(int id) {
+  return false;
+}
+
 #endif

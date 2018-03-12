@@ -52,6 +52,12 @@ private:
   // underlying implementation
   bucket* map[map_end];
 
+  /**
+   *
+   * @param v
+   * @return
+   */
+  std::vector<V> allValsHelper(std::vector<V> v);
 public:
   // constructor takes a pointer to a
   // hashing function
@@ -70,9 +76,9 @@ public:
   // returns current number of entries
   int getNumberOfEntries();
 
+
   // return all movies sorted like they need to be
-//  static std::vector<V>
-//  retrieveAllValues(HashTable<K, V>, bool(*sortComparator)(V, V));
+  std::vector<V> retrieveAllValues(HashTable<K, V>);
 
   // helper function for unit testing purposes
   int getHash(K);
@@ -221,6 +227,7 @@ template<class K, class V>
   void HashTable<K,V>::update(int idx,K key, V val, bucket* b){
     if(idx >= 0){
       b->kv[idx].second = val;
+      return;
     }
     key = key;  // this is just to squelch the warning that key was unused.
     throw "Internal Logic Error: HashTable::update()";
@@ -241,4 +248,28 @@ template<class K, class V>
 //  delete[] map;   // I'm not too certain on delete actually, why not use
                     // delete[] map; ?
 }
+
+template<class K, class V>
+  std::vector<V> HashTable<K,V>::allValsHelper(std::vector<V> v){
+    int low = 0, high = (int)v.size(), mid = high/2;
+
+    auto pivLambda = [&v](int low, int mid, int hi){
+
+    };
+
+  }
+
+template<class K, class V>
+  std::vector<V> HashTable<K, V>::retrieveAllValues(HashTable<K, V>) {
+    // this assumes that we are being given a movie object for v;
+    std::vector<V> ret(numberOfEntries);
+    for(int i = 0; i < map_end; ++i){
+      auto iterf = map[i]->kv.begin();
+      auto iterb = map[i]->kv.end();
+      while(iterf != iterb ) ret.push_back(iterf->second);
+    }
+
+    return std::vector<V>();
+  }
+
 #endif //HASHTABLE_H
