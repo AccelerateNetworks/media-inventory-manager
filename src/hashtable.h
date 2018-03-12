@@ -247,8 +247,8 @@ template<class K, class V>
       delete map[i];
     }
   }
-  delete[] map;   // I'm not too certain on delete actually, why not use
-                    // delete[] map; ?
+//  delete[] map;   // I'm not too certain on delete actually, why not use
+//                    // delete[] map; ?
 }
 
 template<class K, class V>

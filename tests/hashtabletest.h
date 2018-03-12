@@ -16,6 +16,7 @@ HashTable<int,int> testTable(&intHasher); // NOLINT
 
 void hashTableEnrollTest();
 void hashTableConstructorTest();
+
 void hashTableTest(){
   cout << "[+] Testing HashTable" << endl;
   try{
@@ -27,6 +28,29 @@ void hashTableTest(){
     cout << "[-] " << s << endl;
   }
 
+}
+
+void hastablesortingTest(){
+  int a[20] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+  HashTable<int,int> sortableTable(&int)
+  try{
+    testTable.enroll(2, 4);
+    a = testTable.get(2);
+    if(a == nullptr){
+      throw "Failed enroll test at first get(): returned nullptr";
+    }
+    if(*a != 4) throw "failed enroll test at first get(): wrong val";
+
+    testTable.enroll(2, 5);
+    if(*testTable.get(2)!=5){
+      throw "Failed enroll test at second get()";
+    }
+    if(testTable.getNumberOfEntries() != 1)
+      throw "Failed enroll test, number of entries not updated on enroll";
+
+  } catch (const char* s){
+    throw s;
+  }
 }
 
 void hashTableConstructorTest(){
