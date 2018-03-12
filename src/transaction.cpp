@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 #include "transaction.h"
 
 
@@ -27,9 +28,15 @@ uint64_t Transaction::unixTimeCheckedOut() const {
 }
 
 bool Transaction::contains( Movie &arg){
-  for (Movie* itm : contents) if (arg.getId() == itm->getId() ) {
+  std::cout << arg.getTitle() << std::endl;
+  int i = arg.getId();
+  for (Movie* itm : contents){
+    if(itm == nullptr){
+      // nope
+    } else if (i == itm->getId() ) {
       return true;
     }
+  }
   return false;
 }
 

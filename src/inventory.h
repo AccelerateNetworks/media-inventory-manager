@@ -41,7 +41,7 @@ class Inventory {
   // empty ctor to handle non-trivial member variable instantiation.
   Inventory() = default;
 
-  void addItem(Movie);
+  void addItem(Movie*);
   Movie getItem(int id);
 
   /**

@@ -9,21 +9,25 @@
  * @param arg a Movie pointer to the movie object we want to add to the
  * contents hashmap
  */
-void Inventory::addItem(Movie arg){
-  vector<Movie>** v = this->contents->get(arg.getTitle() +
-                                          arg.getYear() +
-                                          arg.getDirector() +
-                                          arg.getActor());
+void Inventory::addItem(Movie* arg){
+  vector<Movie>** v = this->contents->get(arg->getTitle() +
+                                          arg->getYear() +
+                                          arg->getDirector() +
+                                          arg->getActor());
   if(v == nullptr){
 
     vector<Movie>* n = new vector<Movie>();
-    n->push_back(arg);
-    this->contents->enroll(arg.getTitle() +
-                           arg.getYear() +
-                           arg.getDirector() +
-                           arg.getActor(), n);
+    n->push_back( *(arg) ); //make a copy that wont be deallocated
+    this->contents->enroll(arg->getTitle() +
+                           arg->getYear() +
+                           arg->getDirector() +
+                           arg->getActor(), n);
   } else {
-    (*v)->push_back(arg);
+    (*v)->push_back( *(arg) );
+    this->contents->enroll(arg->getTitle() +
+                           arg->getYear() +
+                           arg->getDirector() +
+                           arg->getActor(), *v);
   }
 }
 
@@ -80,6 +84,7 @@ bool Inventory::newTransaction(const string &customer, const string &title,
   t->addMovie(m);
   vector<Transaction>* b = *(this->transactionLog->get(getClient(customer)));
   b->push_back(*t);
+  //update!
   return true;
 }
 
