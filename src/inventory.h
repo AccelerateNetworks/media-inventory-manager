@@ -17,15 +17,18 @@ using std::vector;
  * @param arg the string representation of the Media object's title
  * @return
  */
-int hashs(const string& arg){
-  return (int) arg[0];
-}
 
-int hashc(const Client& c){
-  return (int) c.getName()[0];
-}
 
 class Inventory {
+
+  static int hashs(const string& arg){
+    return (int) arg[0];
+  }
+
+  static int hashc(const Client& c){
+    return (int) c.getName()[0];
+  }
+
   HashTable<string, vector<Movie>*>* contents
     = new HashTable<string, vector<Movie>*>(hashs);
   HashTable<Client, vector<Transaction>*>* transactionLog
@@ -90,7 +93,7 @@ class Inventory {
   bool isMovieCheckedOut( Movie &target);
 
 
-  ~Inventory();
+  //~Inventory();
 
 
   /**
